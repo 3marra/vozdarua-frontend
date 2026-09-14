@@ -1,6 +1,13 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { enviarFeedback } from '@/services/feedback'
+import AppIcon from '@/components/ui/AppIcon.vue'
+
+const TIPOS = [
+  { value: 'sugestao', label: 'Sugestão', icon: 'lightbulb' },
+  { value: 'critica', label: 'Crítica', icon: 'build' },
+  { value: 'elogio', label: 'Elogio', icon: 'thumb_up' },
+]
 
 const form = reactive({ tipo: 'sugestao', mensagem: '', nome: '', email: '' })
 const enviado = ref(false)
@@ -33,7 +40,9 @@ function novoFeedback() {
   <div class="max-w-xl mx-auto px-5 py-8 pb-24 lg:pb-8">
 
     <div class="mb-7">
-      <div class="w-16 h-16 rounded-3xl bg-violet-50 flex items-center justify-center text-3xl mb-4">💬</div>
+      <div class="w-16 h-16 rounded-3xl bg-violet-50 flex items-center justify-center text-violet-500 mb-4">
+        <AppIcon name="chat_bubble" size="32" />
+      </div>
       <h1 class="text-2xl font-extrabold text-gray-900 mb-2">Deixe seu feedback</h1>
       <p class="text-sm text-gray-500 leading-relaxed">
         O Voz da Rua é uma iniciativa em construção. Sua opinião ajuda a melhorar a plataforma para toda a comunidade.
@@ -42,7 +51,9 @@ function novoFeedback() {
 
     <!-- Sucesso -->
     <div v-if="enviado" class="flex flex-col items-center text-center py-12 gap-4">
-      <div class="w-20 h-20 rounded-full bg-teal/10 flex items-center justify-center text-4xl">✅</div>
+      <div class="w-20 h-20 rounded-full bg-teal/10 flex items-center justify-center text-teal">
+        <AppIcon name="check_circle" size="40" />
+      </div>
       <h2 class="text-lg font-bold text-gray-900">Obrigado pelo feedback!</h2>
       <p class="text-sm text-gray-500 max-w-xs leading-relaxed">
         Sua mensagem foi recebida pelo grupo Tapioca. Vamos ler com atenção e usar para melhorar a plataforma.
@@ -62,15 +73,15 @@ function novoFeedback() {
         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Tipo</p>
         <div class="flex gap-2">
           <button
-            v-for="opt in [{ value: 'sugestao', label: '💡 Sugestão' }, { value: 'critica', label: '🔧 Crítica' }, { value: 'elogio', label: '👏 Elogio' }]"
+            v-for="opt in TIPOS"
             :key="opt.value"
             type="button"
-            class="flex-1 py-2.5 rounded-2xl text-sm font-semibold border transition-colors"
+            class="flex-1 py-2.5 rounded-2xl text-sm font-semibold border transition-colors flex items-center justify-center gap-1.5"
             :class="form.tipo === opt.value
               ? 'bg-teal text-white border-teal'
               : 'bg-white text-gray-600 border-gray-200 hover:border-teal/40 hover:text-teal'"
             @click="form.tipo = opt.value"
-          >{{ opt.label }}</button>
+          ><AppIcon :name="opt.icon" size="16" />{{ opt.label }}</button>
         </div>
       </div>
 

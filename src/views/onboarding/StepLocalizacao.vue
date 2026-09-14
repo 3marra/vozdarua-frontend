@@ -9,6 +9,7 @@ import { useGeolocation } from '@/composables/useGeolocation'
 import { useViaCep } from '@/composables/useViaCep'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppField from '@/components/ui/AppField.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const emit = defineEmits(['next'])
 
@@ -290,7 +291,9 @@ function continuar() {
       <!-- Campo de busca de endereço -->
       <div class="relative">
         <div class="relative">
-          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">🔍</span>
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <AppIcon name="search" />
+          </span>
           <input
             :value="buscaRua"
             type="text"
@@ -299,7 +302,9 @@ function continuar() {
             class="w-full rounded-xl border border-gray-300 pl-10 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal/50 focus:border-teal transition"
             @input="onBuscaInput"
           />
-          <span v-if="buscando" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-teal text-base animate-spin">⟳</span>
+          <span v-if="buscando" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-teal animate-spin">
+            <AppIcon name="progress_activity" size="18" />
+          </span>
         </div>
 
         <!-- Dropdown de sugestões -->
@@ -333,7 +338,7 @@ function continuar() {
         :disabled="carregando"
         @click="permitirGps"
       >
-        <span class="text-base">📍</span>
+        <AppIcon name="my_location" />
         {{ carregando ? 'Obtendo localização...' : 'Usar minha localização atual' }}
       </button>
     </div>
@@ -341,7 +346,7 @@ function continuar() {
     <!-- Fase CEP: campo com busca automática -->
     <div v-else-if="fase === 'cep'" class="flex flex-col gap-4">
       <div class="rounded-xl bg-gray-50 border border-gray-200 p-3.5 flex gap-2.5 items-start">
-        <span>🔍</span>
+        <AppIcon name="search" class="text-gray-400" />
         <p class="text-xs text-gray-500 leading-relaxed">
           Digite o CEP — o endereço será preenchido automaticamente.
         </p>
@@ -363,12 +368,12 @@ function continuar() {
           <!-- Spinner dentro do campo -->
           <span
             v-if="carregando"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-teal text-xs animate-spin"
-          >⟳</span>
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-teal animate-spin"
+          ><AppIcon name="progress_activity" size="16" /></span>
           <span
             v-else-if="geo.rua && !erro"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 text-sm"
-          >✓</span>
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500"
+          ><AppIcon name="check" size="18" /></span>
         </div>
         <p v-if="erro" class="text-xs text-red-500 mt-0.5">{{ erro }}</p>
       </div>
@@ -380,7 +385,7 @@ function continuar() {
     <div v-else-if="fase === 'preenchendo'" class="flex flex-col gap-4">
       <!-- Endereço base (somente leitura) -->
       <div class="rounded-xl bg-teal-soft border border-teal-mid/40 p-3.5 flex gap-2.5">
-        <span>✅</span>
+        <AppIcon name="check_circle" class="text-teal" />
         <div>
           <p class="text-xs font-bold text-teal-dark">Endereço encontrado</p>
           <p class="text-xs text-teal mt-0.5 leading-relaxed">
@@ -405,7 +410,9 @@ function continuar() {
     <div v-else-if="fase === 'manual'" class="flex flex-col gap-4">
       <div class="relative">
         <div class="relative">
-          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">🔍</span>
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <AppIcon name="search" />
+          </span>
           <input
             :value="buscaRua"
             type="text"
@@ -414,7 +421,9 @@ function continuar() {
             class="w-full rounded-xl border border-gray-300 pl-10 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal/50 focus:border-teal transition"
             @input="onBuscaInput"
           />
-          <span v-if="buscando" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-teal text-base animate-spin">⟳</span>
+          <span v-if="buscando" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-teal animate-spin">
+            <AppIcon name="progress_activity" size="18" />
+          </span>
         </div>
 
         <ul
@@ -439,7 +448,7 @@ function continuar() {
     <!-- Fase confirmando: mapa com pin para o usuário confirmar -->
     <div v-else-if="fase === 'confirmando'" class="flex flex-col gap-4">
       <div class="rounded-xl bg-teal-soft border border-teal-mid/40 p-3.5 flex gap-2.5">
-        <span>📍</span>
+        <AppIcon name="location_on" class="text-teal" />
         <div>
           <p class="text-xs font-bold text-teal-dark">Localização sugerida</p>
           <p class="text-xs text-teal mt-0.5 leading-relaxed">{{ enderecoResumo || 'Endereço informado' }}</p>
@@ -458,8 +467,8 @@ function continuar() {
             class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal/50 focus:border-teal transition pr-10"
             @change="refinarPorNumero"
           />
-          <span v-if="carregando" class="absolute right-3 top-1/2 -translate-y-1/2 text-teal text-base animate-spin">⟳</span>
-          <span v-else-if="numero" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 text-sm">✓</span>
+          <span v-if="carregando" class="absolute right-3 top-1/2 -translate-y-1/2 text-teal animate-spin"><AppIcon name="progress_activity" size="18" /></span>
+          <span v-else-if="numero" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500"><AppIcon name="check" size="18" /></span>
         </div>
         <p v-if="numeroAproximado && numeroProximoEncontrado" class="text-[11px] text-amber-600">
           Número exato não mapeado — usamos o prédio nº {{ numeroProximoEncontrado }}, o mais próximo cadastrado nesta rua. Arraste o pin se necessário.
@@ -476,7 +485,7 @@ function continuar() {
 
       <!-- Desktop: dica de que o pin está no mapa à esquerda -->
       <div class="hidden lg:flex items-center gap-2.5 rounded-xl bg-gray-50 border border-gray-200 p-3.5">
-        <span>🗺️</span>
+        <AppIcon name="map" class="text-gray-400" />
         <p class="text-xs text-gray-500 leading-relaxed">Verifique o pin no mapa à esquerda. Se necessário, arraste-o para o local exato.</p>
       </div>
 

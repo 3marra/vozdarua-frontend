@@ -6,24 +6,25 @@ import AuthModal from '@/components/auth/AuthModal.vue'
 import UserMenu from '@/components/auth/UserMenu.vue'
 import WelcomeModal from '@/components/ui/WelcomeModal.vue'
 import InstallPromptModal from '@/components/ui/InstallPromptModal.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const route = useRoute()
 const router = useRouter()
 const { isLoggedIn } = useAuth()
 
 const TABS_ESQUERDA = computed(() => isLoggedIn.value
-  ? [{ path: '/app/mapa', label: 'Mapa', icon: '🗺️' }, { path: '/app/minhas', label: 'Minhas', icon: '📋' }]
-  : [{ path: '/app/mapa', label: 'Mapa', icon: '🗺️' }]
+  ? [{ path: '/app/mapa', label: 'Mapa', icon: 'map' }, { path: '/app/minhas', label: 'Minhas', icon: 'assignment' }]
+  : [{ path: '/app/mapa', label: 'Mapa', icon: 'map' }]
 )
 
 const TABS_DIREITA = computed(() => isLoggedIn.value
-  ? [{ path: '/app/alertas', label: 'Alertas', icon: '🔔' }, { path: '/app/perfil', label: 'Perfil', icon: '👤' }]
-  : [{ path: '/app/ranking', label: 'Ranking', icon: '🏆' }]
+  ? [{ path: '/app/alertas', label: 'Alertas', icon: 'notifications' }, { path: '/app/perfil', label: 'Perfil', icon: 'person' }]
+  : [{ path: '/app/ranking', label: 'Ranking', icon: 'emoji_events' }]
 )
 
 const TABS_DESKTOP = computed(() => isLoggedIn.value
-  ? [{ path: '/app/mapa', label: 'Mapa', icon: '🗺️' }, { path: '/app/minhas', label: 'Minhas', icon: '📋' }, { path: '/app/alertas', label: 'Alertas', icon: '🔔' }, { path: '/app/ranking', label: 'Ranking', icon: '🏆' }]
-  : [{ path: '/app/mapa', label: 'Mapa', icon: '🗺️' }, { path: '/app/ranking', label: 'Ranking', icon: '🏆' }]
+  ? [{ path: '/app/mapa', label: 'Mapa', icon: 'map' }, { path: '/app/minhas', label: 'Minhas', icon: 'assignment' }, { path: '/app/alertas', label: 'Alertas', icon: 'notifications' }, { path: '/app/ranking', label: 'Ranking', icon: 'emoji_events' }]
+  : [{ path: '/app/mapa', label: 'Mapa', icon: 'map' }, { path: '/app/ranking', label: 'Ranking', icon: 'emoji_events' }]
 )
 
 const authModal = ref(false)
@@ -75,14 +76,14 @@ function isActive(path) {
             class="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left"
             @click="router.push('/app/sobre')"
           >
-            <span>ℹ️</span> Sobre
+            <AppIcon name="info" /> Sobre
           </button>
           <button
             type="button"
             class="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left border-t border-gray-50"
             @click="router.push('/app/feedback')"
           >
-            <span>💬</span> Feedback
+            <AppIcon name="chat_bubble" /> Feedback
           </button>
         </div>
       </div>
@@ -127,7 +128,7 @@ function isActive(path) {
           :class="isActive(tab.path) ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'"
           @click="router.push(tab.path)"
         >
-          <span>{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" size="20" />
           <span>{{ tab.label }}</span>
         </button>
       </nav>
@@ -175,10 +176,11 @@ function isActive(path) {
         @click="navTab(tab.path)"
       >
         <span
-          class="flex items-center justify-center rounded-2xl transition-all duration-200 text-2xl"
+          class="flex items-center justify-center rounded-2xl transition-all duration-200"
           :class="isActive(tab.path) ? 'bg-teal-soft px-4 py-1' : 'px-4 py-1'"
-          aria-hidden="true"
-        >{{ tab.icon }}</span>
+        >
+          <AppIcon :name="tab.icon" size="24" />
+        </span>
       </button>
 
       <!-- Botão central FAB -->
@@ -189,7 +191,7 @@ function isActive(path) {
           class="flex items-center justify-center w-14 h-14 rounded-full bg-teal text-white text-2xl shadow-lg shadow-teal/40 border-4 border-white hover:bg-teal-dark active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
           @click="router.push('/app/registrar')"
         >
-          <span aria-hidden="true" class="font-light leading-none">＋</span>
+          <AppIcon name="add" size="28" />
         </button>
       </div>
 
@@ -205,10 +207,11 @@ function isActive(path) {
         @click="navTab(tab.path)"
       >
         <span
-          class="flex items-center justify-center rounded-2xl transition-all duration-200 text-2xl"
+          class="flex items-center justify-center rounded-2xl transition-all duration-200"
           :class="isActive(tab.path) ? 'bg-teal-soft px-4 py-1' : 'px-4 py-1'"
-          aria-hidden="true"
-        >{{ tab.icon }}</span>
+        >
+          <AppIcon :name="tab.icon" size="24" />
+        </span>
       </button>
     </nav>
 

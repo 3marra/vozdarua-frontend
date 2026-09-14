@@ -1,9 +1,15 @@
+<script setup>
+import AppIcon from '@/components/ui/AppIcon.vue'
+</script>
+
 <template>
   <div class="max-w-2xl mx-auto px-5 py-8 pb-24 lg:pb-8">
 
     <!-- Hero -->
     <div class="mb-8">
-      <div class="w-16 h-16 rounded-3xl bg-teal/10 flex items-center justify-center text-3xl mb-4">🗣️</div>
+      <div class="w-16 h-16 rounded-3xl bg-teal/10 flex items-center justify-center text-teal mb-4">
+        <AppIcon name="record_voice_over" size="32" />
+      </div>
       <h1 class="text-2xl font-extrabold text-gray-900 mb-2">O que é o Voz da Rua?</h1>
       <p class="text-gray-500 text-sm leading-relaxed">
         Uma plataforma cidadã para registrar, acompanhar e pressionar por soluções para problemas urbanos.
@@ -89,7 +95,7 @@
           </a>
         </div>
         <div class="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-3">
-          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-base">🙌</div>
+          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500"><AppIcon name="groups" size="20" /></div>
           <div>
             <p class="text-sm font-semibold text-gray-800">E outros colaboradores</p>
             <p class="text-xs text-gray-400">Que acreditam na ideia</p>

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const { user, isLoggedIn, logout } = useAuth()
 const router = useRouter()
@@ -51,14 +52,14 @@ function irPerfil() {
             class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 text-left"
             @click="irPerfil"
           >
-            <span>👤</span> Meu perfil
+            <AppIcon name="person" /> Meu perfil
           </button>
           <button
             type="button"
             class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 text-left"
             @click="sair"
           >
-            <span>↩</span> Sair da conta
+            <AppIcon name="logout" /> Sair da conta
           </button>
         </div>
       </div>

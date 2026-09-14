@@ -4,6 +4,7 @@ import { useCidadeStore } from '@/stores/cidade'
 import { useGeolocationStore } from '@/stores/geolocation'
 import { useGeolocation } from '@/composables/useGeolocation'
 import * as cidadesService from '@/services/cidades'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const emit = defineEmits(['close'])
 
@@ -86,13 +87,13 @@ onMounted(async () => {
           class="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
           @click="emit('close')"
           aria-label="Fechar"
-        >✕</button>
+        ><AppIcon name="close" /></button>
       </div>
 
       <!-- Busca -->
       <div class="px-5 pb-3">
         <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all">
-          <span class="text-gray-400 text-base flex-shrink-0">🔍</span>
+          <AppIcon name="search" class="text-gray-400 flex-shrink-0" size="18" />
           <input
             ref="searchInput"
             v-model="busca"
@@ -103,9 +104,9 @@ onMounted(async () => {
           <button
             v-if="busca"
             type="button"
-            class="text-gray-400 hover:text-gray-600 transition-colors text-xs"
+            class="text-gray-400 hover:text-gray-600 transition-colors"
             @click="busca = ''"
-          >✕</button>
+          ><AppIcon name="close" size="16" /></button>
         </div>
       </div>
 
@@ -127,7 +128,7 @@ onMounted(async () => {
               :class="cidade.id === cidadeStore.cidadeAtual.id ? 'bg-teal/10' : 'hover:bg-gray-50'"
               @click="selecionar(cidade)"
             >
-              <span class="text-teal text-sm font-bold self-center">{{ cidade.id === cidadeStore.cidadeAtual.id ? '✓' : '' }}</span>
+              <span class="text-teal self-center"><AppIcon v-if="cidade.id === cidadeStore.cidadeAtual.id" name="check" size="18" /></span>
               <span class="text-sm self-center" :class="cidade.id === cidadeStore.cidadeAtual.id ? 'font-semibold text-teal' : 'text-gray-800'">{{ cidade.name }}</span>
               <span class="text-xs text-gray-400 font-medium self-center bg-gray-100 rounded px-1.5 py-0.5 ml-2">{{ cidade.state?.uf }}</span>
             </button>
@@ -144,7 +145,7 @@ onMounted(async () => {
             style="grid-template-columns: 1.5rem 1fr auto"
             @click="emit('close')"
           >
-            <span class="text-teal text-sm font-bold self-center">✓</span>
+            <span class="text-teal self-center"><AppIcon name="check" size="18" /></span>
             <span class="text-sm font-semibold text-teal self-center">{{ cidadeStore.cidadeAtual.nome }}</span>
             <span class="text-xs text-teal font-semibold self-center bg-teal/10 rounded px-1.5 py-0.5 ml-2">{{ cidadeStore.cidadeAtual.uf }}</span>
           </button>

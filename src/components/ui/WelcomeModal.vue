@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const visible = ref(false)
 
@@ -44,8 +45,8 @@ function fechar() {
           >
             <!-- Topo colorido -->
             <div class="bg-teal-dark px-6 pt-7 pb-5 sm:pt-10 sm:pb-7 flex flex-col items-center text-center gap-2 sm:gap-3">
-              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center text-2xl sm:text-4xl">
-                📣
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white">
+                <AppIcon name="campaign" size="32" />
               </div>
               <div>
                 <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight">Voz da Rua</h1>
@@ -61,21 +62,21 @@ function fechar() {
 
               <div class="flex flex-col gap-2.5 sm:gap-4">
                 <div class="flex items-start gap-3">
-                  <span class="text-base sm:text-xl mt-0.5 flex-shrink-0">📍</span>
+                  <AppIcon name="location_on" size="20" class="text-teal mt-0.5 flex-shrink-0" />
                   <div>
                     <p class="text-sm sm:text-base font-semibold text-gray-800">Registre ocorrências</p>
                     <p class="text-xs sm:text-sm text-gray-500 leading-snug mt-0.5">Buracos, iluminação, lixo, alagamentos e muito mais — em qualquer rua da cidade.</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-3">
-                  <span class="text-base sm:text-xl mt-0.5 flex-shrink-0">🗺️</span>
+                  <AppIcon name="map" size="20" class="text-teal mt-0.5 flex-shrink-0" />
                   <div>
                     <p class="text-sm sm:text-base font-semibold text-gray-800">Veja no mapa</p>
                     <p class="text-xs sm:text-sm text-gray-500 leading-snug mt-0.5">Acompanhe em tempo real o que outros moradores estão reportando no seu bairro.</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-3">
-                  <span class="text-base sm:text-xl mt-0.5 flex-shrink-0">✅</span>
+                  <AppIcon name="check_circle" size="20" class="text-teal mt-0.5 flex-shrink-0" />
                   <div>
                     <p class="text-sm sm:text-base font-semibold text-gray-800">Acompanhe o status</p>
                     <p class="text-xs sm:text-sm text-gray-500 leading-snug mt-0.5">Saiba quando um problema foi recebido, está em análise ou já foi resolvido.</p>

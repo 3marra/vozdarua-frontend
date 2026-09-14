@@ -7,6 +7,7 @@ import { useCidadeStore } from '@/stores/cidade'
 import * as authService from '@/services/auth'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppField from '@/components/ui/AppField.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const router = useRouter()
 const { user, isLoggedIn, logout } = useAuth()
@@ -128,7 +129,7 @@ function sair() {
             @click="router.push('/app/mapa')"
           >
             <span>Ver mapa da cidade</span>
-            <span class="text-gray-400">→</span>
+            <AppIcon name="chevron_right" class="text-gray-400" />
           </button>
           <button
             type="button"
@@ -136,7 +137,7 @@ function sair() {
             @click="router.push('/app/registrar')"
           >
             <span>Registrar nova ocorrência</span>
-            <span class="text-gray-400">→</span>
+            <AppIcon name="chevron_right" class="text-gray-400" />
           </button>
         </div>
 

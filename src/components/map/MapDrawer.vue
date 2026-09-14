@@ -7,6 +7,7 @@ import * as comentariosService from '@/services/comentarios'
 import { maskEmail } from '@/utils/email'
 import OccurrenceStatus from '@/components/occurrence/OccurrenceStatus.vue'
 import AppButton from '@/components/ui/AppButton.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const props = defineProps({
   ocorrencia: { type: Object, default: null },
@@ -201,7 +202,7 @@ function iniciais(email) {
             class="flex items-center gap-1.5 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all text-gray-700 font-semibold text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
             @click="ui.closeDrawer"
           >
-            <span aria-hidden="true" class="text-sm font-bold">✕</span>
+            <AppIcon name="close" size="16" />
             Fechar
           </button>
           <OccurrenceStatus :status="ocorrencia.status" />
@@ -220,7 +221,7 @@ function iniciais(email) {
               class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
               @click="anteriorPin"
             >
-              <span aria-hidden="true" class="text-base leading-none">‹</span>
+              <AppIcon name="chevron_left" />
             </button>
             <span class="text-xs text-gray-400 tabular-nums flex-shrink-0">{{ currentIndex + 1 }} de {{ lista.length }}</span>
             <button
@@ -230,7 +231,7 @@ function iniciais(email) {
               class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
               @click="proximoPin"
             >
-              <span aria-hidden="true" class="text-base leading-none">›</span>
+              <AppIcon name="chevron_right" />
             </button>
           </template>
         </div>
@@ -252,10 +253,10 @@ function iniciais(email) {
           <template v-if="fotos.length > 1">
             <button type="button" aria-label="Foto anterior"
               class="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
-              @click.stop="fotoAnterior">‹</button>
+              @click.stop="fotoAnterior"><AppIcon name="chevron_left" /></button>
             <button type="button" aria-label="Próxima foto"
               class="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
-              @click.stop="proximaFoto">›</button>
+              @click.stop="proximaFoto"><AppIcon name="chevron_right" /></button>
 
             <!-- Indicadores -->
             <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
@@ -274,7 +275,7 @@ function iniciais(email) {
           <button type="button" aria-label="Abrir foto em tamanho maior"
             class="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-black/40 px-2 py-1 text-white text-[10px] hover:bg-black/60 transition-colors"
             @click="abrirLightbox">
-            <span aria-hidden="true">⤢</span> Ampliar
+            <AppIcon name="open_in_full" size="14" /> Ampliar
           </button>
         </div>
 
@@ -329,7 +330,7 @@ function iniciais(email) {
               class="flex-1 flex flex-col items-center gap-1.5 py-4 rounded-2xl border active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               @click="confirmarProblema"
             >
-              <span class="text-xl" aria-hidden="true">👍</span>
+              <AppIcon name="thumb_up" size="22" />
               <span class="text-xs font-bold leading-tight text-center">Confirmar<br>problema</span>
               <span class="text-xs font-extrabold tabular-nums transition-all">{{ confirmacoes }}</span>
             </button>
@@ -344,7 +345,7 @@ function iniciais(email) {
               class="flex-1 flex flex-col items-center gap-1.5 py-4 rounded-2xl border active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
               @click="marcarResolvido"
             >
-              <span class="text-xl" aria-hidden="true">✅</span>
+              <AppIcon name="check_circle" size="22" />
               <span class="text-xs font-bold leading-tight text-center">Já foi<br>resolvido</span>
               <span class="text-xs font-extrabold tabular-nums transition-all">{{ resolucoes }}</span>
             </button>
@@ -358,7 +359,7 @@ function iniciais(email) {
               class="flex-1 flex flex-col items-center gap-1.5 py-4 rounded-2xl border active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
               @click="toggleComentarios"
             >
-              <span class="text-xl" aria-hidden="true">💬</span>
+              <AppIcon name="chat_bubble" size="22" />
               <span class="text-xs font-bold leading-tight text-center">Comentários</span>
               <span class="text-xs font-extrabold tabular-nums">{{ comentarios.length }}</span>
             </button>
@@ -394,13 +395,7 @@ function iniciais(email) {
             <div v-else-if="comentarios.length > 0" class="flex flex-col gap-4">
               <div v-for="c in comentarios" :key="c.id" class="flex gap-2.5">
                 <div class="flex-shrink-0 h-8 w-8 rounded-full bg-teal-soft flex items-center justify-center text-xs font-bold text-teal">
-                  <svg v-if="!c.authorEmail" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
-                    <path d="M7 3.2c1-1.4 2.5-1.4 3.5-.2.5.6 1.5.6 2 0 1-1.2 2.5-1.2 3.5.2.8 1 1 2.2.8 3.3H6.2c-.2-1.1 0-2.3.8-3.3z" />
-                    <rect x="2" y="6.3" width="20" height="2.2" rx="1.1" />
-                    <circle cx="8" cy="15" r="3.2" />
-                    <circle cx="16" cy="15" r="3.2" />
-                    <rect x="10.8" y="14.3" width="2.4" height="1.4" rx="0.7" />
-                  </svg>
+                  <AppIcon v-if="!c.authorEmail" name="person_off" size="18" />
                   <template v-else>{{ iniciais(c.authorEmail) }}</template>
                 </div>
                 <div class="flex-1 min-w-0">
@@ -445,7 +440,7 @@ function iniciais(email) {
                   class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-teal text-white hover:bg-teal-dark active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                   @click="enviarComentario"
                 >
-                  <span aria-hidden="true" class="text-base">↑</span>
+                  <AppIcon name="send" size="18" />
                 </button>
               </div>
               <p v-if="erroComentario" class="text-xs text-red-500">{{ erroComentario }}</p>
@@ -477,8 +472,8 @@ function iniciais(email) {
         <div class="flex items-center justify-between px-4 py-3 flex-shrink-0">
           <span class="text-white/60 text-sm">{{ fotoAtual + 1 }} / {{ fotos.length }}</span>
           <button type="button" aria-label="Fechar"
-            class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors text-xl"
-            @click="fecharLightbox">✕</button>
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+            @click="fecharLightbox"><AppIcon name="close" /></button>
         </div>
 
         <!-- Imagem -->
@@ -491,11 +486,11 @@ function iniciais(email) {
 
           <template v-if="fotos.length > 1">
             <button type="button" aria-label="Foto anterior"
-              class="absolute left-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors"
-              @click.stop="fotoAnterior">‹</button>
+              class="absolute left-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              @click.stop="fotoAnterior"><AppIcon name="chevron_left" size="28" /></button>
             <button type="button" aria-label="Próxima foto"
-              class="absolute right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors"
-              @click.stop="proximaFoto">›</button>
+              class="absolute right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              @click.stop="proximaFoto"><AppIcon name="chevron_right" size="28" /></button>
           </template>
         </div>
 

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { isStandalone } from '@/utils/pwa'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const DISMISS_KEY = 'vozdarua_install_dismissed_at'
 const DISMISS_DAYS = 14
@@ -78,7 +79,7 @@ onUnmounted(() => {
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="dismiss" />
         <div class="relative z-10 w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div class="bg-teal-dark px-6 pt-7 pb-5 flex flex-col items-center text-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">📲</div>
+            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-white"><AppIcon name="install_mobile" size="28" /></div>
             <h1 class="text-lg font-extrabold text-white tracking-tight">Instalar o Voz da Rua</h1>
           </div>
           <div class="px-5 py-5 flex flex-col gap-4">
@@ -115,7 +116,7 @@ onUnmounted(() => {
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="dismiss" />
         <div class="relative z-10 w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div class="bg-teal-dark px-6 pt-7 pb-5 flex flex-col items-center text-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">📲</div>
+            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-white"><AppIcon name="install_mobile" size="28" /></div>
             <h1 class="text-lg font-extrabold text-white tracking-tight">Instalar o Voz da Rua</h1>
           </div>
           <div class="px-5 py-5 flex flex-col gap-4">

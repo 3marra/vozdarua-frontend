@@ -1,4 +1,6 @@
 <script setup>
+import AppIcon from '@/components/ui/AppIcon.vue'
+
 defineProps({
   showBack: { type: Boolean, default: false },
   title: { type: String, default: 'Voz da Rua' },
@@ -15,7 +17,7 @@ defineEmits(['back'])
       class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
       @click="$emit('back')"
     >
-      <span aria-hidden="true">←</span>
+      <AppIcon name="arrow_back" />
     </button>
     <div class="flex items-center gap-1.5 text-base font-extrabold text-gray-900">
       {{ title }}

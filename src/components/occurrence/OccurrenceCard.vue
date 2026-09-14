@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import OccurrenceStatus from './OccurrenceStatus.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const props = defineProps({
   ocorrencia: { type: Object, required: true },
@@ -40,7 +41,7 @@ const severidadeBorda = computed(() => {
         <p class="text-sm font-medium text-gray-800 line-clamp-2 leading-snug">{{ props.ocorrencia.description }}</p>
         <OccurrenceStatus :status="props.ocorrencia.status" />
       </div>
-      <p class="text-xs text-gray-500">📍 {{ enderecoResumo }}</p>
+      <p class="text-xs text-gray-500 flex items-center gap-1"><AppIcon name="location_on" size="14" /> {{ enderecoResumo }}</p>
       <p class="text-xs text-gray-400">{{ dataResumo }}</p>
     </div>
 

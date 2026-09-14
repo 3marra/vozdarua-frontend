@@ -3,6 +3,7 @@ import { ref, computed, toRef } from 'vue'
 import { useCidadeStore } from '@/stores/cidade'
 import { useCityMetricsBreakdown } from '@/composables/useCityMetricsBreakdown'
 import CityPickerModal from './CityPickerModal.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const props = defineProps({
   metricas: { type: Object, default: null },
@@ -78,7 +79,9 @@ function onTouchEnd(e) {
             >trocar</button>
           </div>
         </div>
-        <span class="text-gray-400 transition-transform duration-300 text-sm" :class="expanded ? 'rotate-180' : ''" aria-hidden="true">▲</span>
+        <span class="text-gray-400 transition-transform duration-300" :class="expanded ? 'rotate-180' : ''">
+          <AppIcon name="keyboard_arrow_up" />
+        </span>
       </div>
 
       <!-- Linha 2: KPIs -->

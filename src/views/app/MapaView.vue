@@ -9,6 +9,7 @@ import MapDrawer from '@/components/map/MapDrawer.vue'
 import LocationModal from '@/components/modals/LocationModal.vue'
 import CityMetricsSheet from '@/components/map/CityMetricsSheet.vue'
 import CityMetricsSidebar from '@/components/map/CityMetricsSidebar.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const router = useRouter()
 const ocorrencias = useOcorrenciasStore()
@@ -65,7 +66,7 @@ onUnmounted(() => window.removeEventListener('resize', onResize))
         class="hidden lg:flex absolute bottom-8 right-8 z-[1000] items-center gap-3 rounded-2xl bg-teal px-6 py-4 text-white font-bold shadow-xl shadow-teal/40 hover:bg-teal-dark hover:shadow-2xl hover:shadow-teal/50 hover:-translate-y-0.5 active:scale-95 active:shadow-lg transition-all duration-150"
         @click="router.push('/app/registrar')"
       >
-        <span class="flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-base leading-none font-extrabold">+</span>
+        <span class="flex items-center justify-center w-6 h-6 rounded-full bg-white/20"><AppIcon name="add" size="18" /></span>
         <span class="text-base">Registrar ocorrência</span>
       </button>
 

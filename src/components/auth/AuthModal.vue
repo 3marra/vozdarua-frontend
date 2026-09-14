@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useAuth } from '@/composables/useAuth'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppField from '@/components/ui/AppField.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -109,9 +110,9 @@ const onSubmit = handleSubmit(async (values) => {
             </div>
             <button
               type="button"
-              class="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 text-lg"
+              class="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100"
               @click="emit('close')"
-            >×</button>
+            ><AppIcon name="close" /></button>
           </div>
 
           <!-- Sucesso (modo esqueci) -->

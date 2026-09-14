@@ -14,10 +14,10 @@ export const T = {
 
 // Nomes exatamente como seedados na API (GET /status)
 export const STATUS_CFG = {
-  Aberto:       { c: '#d97706', bg: '#fef3c7', icon: '●', label: 'Aberto' },
-  'Em análise': { c: '#7c3aed', bg: '#ede9fe', icon: '⟳', label: 'Em análise' },
-  Aceito:       { c: '#0f766e', bg: '#f0fdfa', icon: '✓', label: 'Aceito' },
-  Resolvido:    { c: '#059669', bg: '#d1fae5', icon: '✔', label: 'Resolvido' },
+  Aberto:       { c: '#d97706', bg: '#fef3c7', icon: 'circle', label: 'Aberto' },
+  'Em análise': { c: '#7c3aed', bg: '#ede9fe', icon: 'sync', label: 'Em análise' },
+  Aceito:       { c: '#0f766e', bg: '#f0fdfa', icon: 'check', label: 'Aceito' },
+  Resolvido:    { c: '#059669', bg: '#d1fae5', icon: 'check_circle', label: 'Resolvido' },
 }
 
 export const UF = [

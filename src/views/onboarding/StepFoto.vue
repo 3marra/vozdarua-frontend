@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useOcorrenciasStore } from '@/stores/ocorrencias'
 import AppButton from '@/components/ui/AppButton.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const emit = defineEmits(['next'])
 const ocorrencias = useOcorrenciasStore()
@@ -47,7 +48,7 @@ function continuar() {
         class="rounded-xl border-2 border-dashed border-gray-200 p-8 flex flex-col items-center gap-2 hover:border-teal"
         @click="cameraInput.click()"
       >
-        <span class="text-3xl">📷</span>
+        <AppIcon name="photo_camera" size="32" />
         <span class="text-sm font-semibold text-gray-600">Tirar foto</span>
       </button>
       <button
@@ -55,7 +56,7 @@ function continuar() {
         class="rounded-xl border-2 border-dashed border-gray-200 p-8 flex flex-col items-center gap-2 hover:border-teal"
         @click="galeriaInput.click()"
       >
-        <span class="text-3xl">🖼️</span>
+        <AppIcon name="image" size="32" />
         <span class="text-sm font-semibold text-gray-600">Escolher da galeria</span>
       </button>
     </div>

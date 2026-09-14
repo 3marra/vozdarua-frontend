@@ -7,6 +7,7 @@ import { useOcorrenciasStore } from '@/stores/ocorrencias'
 import { useAuth } from '@/composables/useAuth'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppField from '@/components/ui/AppField.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const emit = defineEmits(['next'])
 const ocorrencias = useOcorrenciasStore()
@@ -108,8 +109,8 @@ function alternarModo() {
     <template v-else>
     <!-- Hero -->
     <div class="mb-6">
-      <div class="w-14 h-14 rounded-2xl bg-teal/10 flex items-center justify-center text-2xl mb-4">
-        {{ modo === 'cadastro' ? '👤' : '👋' }}
+      <div class="w-14 h-14 rounded-2xl bg-teal/10 flex items-center justify-center text-teal mb-4">
+        <AppIcon :name="modo === 'cadastro' ? 'person_add' : 'waving_hand'" size="28" />
       </div>
       <h1 class="text-2xl font-extrabold text-gray-900 leading-tight">
         {{ modo === 'cadastro' ? 'Quase lá!' : 'Bem-vindo de volta!' }}
@@ -129,7 +130,7 @@ function alternarModo() {
       <AppField v-model="password" label="Senha" type="password" :error="errors.password" />
 
       <div v-if="erroEnvio" class="flex items-start gap-2 bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">
-        <span class="text-base flex-shrink-0">⚠️</span>
+        <AppIcon name="warning" class="text-red-600 flex-shrink-0" size="18" />
         <p class="text-xs text-red-600 leading-relaxed">{{ erroEnvio }}</p>
       </div>
 

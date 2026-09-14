@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useCidadeStore } from '@/stores/cidade'
 import * as cidadesService from '@/services/cidades'
 import * as ocorrenciasService from '@/services/ocorrencias'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const cidadeStore = useCidadeStore()
 const carregando = ref(true)
@@ -44,7 +45,7 @@ const rankingCidades = computed(() =>
 const maxContrib = computed(() => rankingContribuidores.value[0]?.total ?? 1)
 const maxCidade  = computed(() => rankingCidades.value[0]?.total ?? 1)
 
-const medalhas = ['🥇', '🥈', '🥉']
+const medalhaCores = ['text-amber-400', 'text-gray-400', 'text-amber-700']
 
 function iniciais(nome) {
   return nome.split(' ').slice(0, 2).map(p => p[0]?.toUpperCase()).join('')
@@ -87,7 +88,7 @@ const avatarColors = [
         <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4">Contribuidores</h2>
 
         <div v-if="rankingContribuidores.length === 0" class="text-center py-10">
-          <p class="text-3xl mb-2">📍</p>
+          <div class="flex justify-center mb-2"><AppIcon name="person_off" size="32" class="text-gray-300" /></div>
           <p class="text-sm text-gray-400">Nenhum contribuidor identificado ainda.</p>
           <p class="text-sm text-gray-300 mt-1">Ocorrências anônimas não entram no ranking.</p>
         </div>
@@ -101,7 +102,7 @@ const avatarColors = [
           >
             <!-- Posição -->
             <div class="w-7 text-center flex-shrink-0">
-              <span v-if="i < 3" class="text-base leading-none">{{ medalhas[i] }}</span>
+              <AppIcon v-if="i < 3" name="workspace_premium" :class="medalhaCores[i]" fill />
               <span v-else class="text-xs font-bold text-gray-400">{{ i + 1 }}</span>
             </div>
 
@@ -128,7 +129,7 @@ const avatarColors = [
             <!-- Contadores -->
             <div class="text-right flex-shrink-0">
               <p class="text-base font-extrabold text-gray-800">{{ usuario.total }}</p>
-              <p class="text-sm text-emerald-500 font-semibold">{{ usuario.taxaResolucao }}% ✓</p>
+              <p class="text-sm text-emerald-500 font-semibold flex items-center gap-0.5 justify-end">{{ usuario.taxaResolucao }}% <AppIcon name="check" size="14" /></p>
             </div>
           </div>
         </div>
@@ -155,7 +156,7 @@ const avatarColors = [
               />
             </div>
             <span class="text-sm font-semibold text-gray-700 w-6 text-right flex-shrink-0">{{ cidade.total }}</span>
-            <span class="text-xs text-emerald-500 w-10 text-right flex-shrink-0">{{ cidade.taxaResolucao }}%✓</span>
+            <span class="text-xs text-emerald-500 w-10 flex items-center justify-end gap-0.5 flex-shrink-0">{{ cidade.taxaResolucao }}% <AppIcon name="check" size="12" /></span>
           </div>
         </div>
       </section>

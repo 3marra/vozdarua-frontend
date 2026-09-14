@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import * as authService from '@/services/auth'
 import OccurrenceStatus from '@/components/occurrence/OccurrenceStatus.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const ocorrencias = ref([])
 const carregando = ref(true)
@@ -66,8 +67,8 @@ function excluir(id) {
           <OccurrenceStatus :status="item.status" />
         </div>
         <p class="text-sm text-gray-600">{{ item.description }}</p>
-        <span v-if="item.address?.city" class="text-xs text-gray-500">
-          📍 {{ [item.address.neighborhood, item.address.city].filter(Boolean).join(', ') }}
+        <span v-if="item.address?.city" class="text-xs text-gray-500 flex items-center gap-1">
+          <AppIcon name="location_on" size="14" /> {{ [item.address.neighborhood, item.address.city].filter(Boolean).join(', ') }}
         </span>
         <div class="flex items-center justify-between gap-2">
           <span class="text-xs text-gray-400">{{ formatarData(item.createdAt) }}</span>
