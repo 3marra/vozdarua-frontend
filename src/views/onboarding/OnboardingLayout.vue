@@ -87,7 +87,7 @@ function onMarkerDragEnd(e) {
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col lg:flex-row">
+  <div class="flex h-full flex-col lg:flex-row">
 
     <!-- DESKTOP: mapa à esquerda (full height) -->
     <div class="hidden lg:block flex-1 relative">
@@ -103,7 +103,7 @@ function onMarkerDragEnd(e) {
     </div>
 
     <!-- Painel do wizard (mobile: full screen | desktop: coluna direita) -->
-    <div class="w-full lg:w-[420px] xl:w-[460px] flex flex-col h-full lg:h-screen lg:border-l border-gray-200 bg-white">
+    <div class="w-full lg:w-[420px] xl:w-[460px] flex flex-col h-full lg:border-l border-gray-200 bg-white">
       <AppTopbar :show-back="true" title="Registrar ocorrência" @back="back" />
 
       <div class="flex-1 overflow-y-auto pb-20 lg:pb-0" :key="currentStep">

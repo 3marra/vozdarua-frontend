@@ -13,11 +13,14 @@ export const T = {
 }
 
 // Nomes exatamente como seedados na API (GET /status)
+// Aberto e Resolvido usam um tom mais escuro que o "500/600" padrão do Tailwind: em cima do
+// bg pastel do badge, a versão clara ficava abaixo de 4.5:1 (WCAG 1.4.3) no texto de 12px.
+// Em análise e Aceito já passavam nas cores originais — não precisaram mudar.
 export const STATUS_CFG = {
-  Aberto:       { c: '#d97706', bg: '#fef3c7', icon: 'circle', label: 'Aberto' },
+  Aberto:       { c: '#a5610a', bg: '#fef3c7', icon: 'circle', label: 'Aberto' },
   'Em análise': { c: '#7c3aed', bg: '#ede9fe', icon: 'sync', label: 'Em análise' },
   Aceito:       { c: '#0f766e', bg: '#f0fdfa', icon: 'check', label: 'Aceito' },
-  Resolvido:    { c: '#059669', bg: '#d1fae5', icon: 'check_circle', label: 'Resolvido' },
+  Resolvido:    { c: '#047857', bg: '#d1fae5', icon: 'check_circle', label: 'Resolvido' },
 }
 
 export const UF = [

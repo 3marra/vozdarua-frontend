@@ -78,15 +78,15 @@ function sair() {
     <div class="mx-5 -mt-10 grid grid-cols-3 gap-3 z-10 relative">
       <div class="rounded-2xl bg-white shadow-sm border border-gray-100 p-4 text-center">
         <p class="text-2xl font-extrabold text-gray-800">{{ stats.inCity }}</p>
-        <p class="text-xs text-gray-400 mt-1">Na cidade</p>
+        <p class="text-xs text-gray-500 mt-1">Na cidade</p>
       </div>
       <div class="rounded-2xl bg-white shadow-sm border border-gray-100 p-4 text-center">
-        <p class="text-2xl font-extrabold text-emerald-500">{{ stats.resolved }}</p>
-        <p class="text-xs text-gray-400 mt-1">Resolvidas</p>
+        <p class="text-2xl font-extrabold text-emerald-700">{{ stats.resolved }}</p>
+        <p class="text-xs text-gray-500 mt-1">Resolvidas</p>
       </div>
       <div class="rounded-2xl bg-white shadow-sm border border-gray-100 p-4 text-center">
         <p class="text-2xl font-extrabold text-amber-500">{{ stats.open }}</p>
-        <p class="text-xs text-gray-400 mt-1">Em aberto</p>
+        <p class="text-xs text-gray-500 mt-1">Em aberto</p>
       </div>
     </div>
 
@@ -95,13 +95,13 @@ function sair() {
       <button
         type="button"
         class="flex-1 py-3 text-sm font-semibold border-b-2 transition-colors"
-        :class="aba === 'perfil' ? 'border-teal text-teal' : 'border-transparent text-gray-400'"
+        :class="aba === 'perfil' ? 'border-teal text-teal' : 'border-transparent text-gray-500'"
         @click="aba = 'perfil'"
       >Meus dados</button>
       <button
         type="button"
         class="flex-1 py-3 text-sm font-semibold border-b-2 transition-colors"
-        :class="aba === 'senha' ? 'border-teal text-teal' : 'border-transparent text-gray-400'"
+        :class="aba === 'senha' ? 'border-teal text-teal' : 'border-transparent text-gray-500'"
         @click="aba = 'senha'"
       >Segurança</button>
     </div>
@@ -113,11 +113,11 @@ function sair() {
       <div v-if="aba === 'perfil'" class="flex flex-col gap-5">
         <div class="rounded-2xl bg-gray-50 border border-gray-100 divide-y divide-gray-100">
           <div class="flex items-center justify-between px-4 py-4">
-            <span class="text-sm text-gray-400">E-mail</span>
+            <span class="text-sm text-gray-500">E-mail</span>
             <span class="text-base font-medium text-gray-700">{{ user?.email }}</span>
           </div>
           <div class="flex items-center justify-between px-4 py-4">
-            <span class="text-sm text-gray-400">Telefone</span>
+            <span class="text-sm text-gray-500">Telefone</span>
             <span class="text-base font-medium text-gray-700">{{ user?.phone || '—' }}</span>
           </div>
         </div>
@@ -129,7 +129,7 @@ function sair() {
             @click="router.push('/app/mapa')"
           >
             <span>Ver mapa da cidade</span>
-            <AppIcon name="chevron_right" class="text-gray-400" />
+            <AppIcon name="chevron_right" class="text-gray-500" />
           </button>
           <button
             type="button"
@@ -137,11 +137,11 @@ function sair() {
             @click="router.push('/app/registrar')"
           >
             <span>Registrar nova ocorrência</span>
-            <AppIcon name="chevron_right" class="text-gray-400" />
+            <AppIcon name="chevron_right" class="text-gray-500" />
           </button>
         </div>
 
-        <AppButton variant="ghost" class="text-red-500 mt-2" @click="sair">
+        <AppButton variant="ghost" class="text-red-600 mt-2" @click="sair">
           Sair da conta
         </AppButton>
       </div>

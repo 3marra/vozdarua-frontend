@@ -48,11 +48,11 @@ function excluir(id) {
       <div class="rounded-xl bg-gray-100 h-16 animate-pulse" />
     </div>
 
-    <p v-else-if="erro" class="text-sm text-red-500 text-center py-10">
+    <p v-else-if="erro" class="text-sm text-red-600 text-center py-10">
       Não foi possível carregar suas ocorrências.
     </p>
 
-    <p v-else-if="ocorrencias.length === 0" class="text-sm text-gray-400 text-center py-10">
+    <p v-else-if="ocorrencias.length === 0" class="text-sm text-gray-500 text-center py-10">
       Você ainda não registrou nenhuma ocorrência.
     </p>
 
@@ -71,7 +71,7 @@ function excluir(id) {
           <AppIcon name="location_on" size="14" /> {{ [item.address.neighborhood, item.address.city].filter(Boolean).join(', ') }}
         </span>
         <div class="flex items-center justify-between gap-2">
-          <span class="text-xs text-gray-400">{{ formatarData(item.createdAt) }}</span>
+          <span class="text-xs text-gray-500">{{ formatarData(item.createdAt) }}</span>
 
           <div v-if="confirmandoId === item.id" class="flex items-center gap-3">
             <button
@@ -84,7 +84,7 @@ function excluir(id) {
             </button>
             <button
               type="button"
-              class="text-xs font-semibold text-red-500 disabled:opacity-50"
+              class="text-xs font-semibold text-red-600 disabled:opacity-50"
               :disabled="excluindoId === item.id"
               @click="excluir(item.id)"
             >
@@ -94,7 +94,7 @@ function excluir(id) {
           <button
             v-else
             type="button"
-            class="text-xs text-red-500"
+            class="text-xs text-red-600"
             @click="pedirConfirmacao(item.id)"
           >
             Excluir

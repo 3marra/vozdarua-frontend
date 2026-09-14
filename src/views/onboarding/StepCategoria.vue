@@ -65,10 +65,10 @@ function selecionar(cat) {
         <span class="text-xl flex-shrink-0 mt-0.5">{{ cat.e }}</span>
         <div class="min-w-0">
           <p class="text-sm font-semibold text-gray-800 leading-snug">{{ cat.l }}</p>
-          <p v-if="cat.ex" class="text-xs text-gray-400 mt-0.5 leading-snug">{{ cat.ex }}</p>
+          <p v-if="cat.ex" class="text-xs text-gray-500 mt-0.5 leading-snug">{{ cat.ex }}</p>
         </div>
       </button>
-      <p v-if="!resultados.length" class="text-sm text-gray-400 text-center py-6">
+      <p v-if="!resultados.length" class="text-sm text-gray-500 text-center py-6">
         Nenhuma categoria encontrada
       </p>
     </div>

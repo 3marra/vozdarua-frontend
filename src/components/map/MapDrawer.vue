@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth'
 import * as ocorrenciasService from '@/services/ocorrencias'
 import * as comentariosService from '@/services/comentarios'
 import { maskEmail } from '@/utils/email'
+import { montarTextoComFoto, extrairFoto } from '@/utils/comentarioFoto'
 import OccurrenceStatus from '@/components/occurrence/OccurrenceStatus.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
@@ -106,7 +107,83 @@ async function marcarResolvido() {
   resolucoes.value++
   marcarFeito(props.ocorrencia.id, 'resolvido')
   if (navigator.vibrate) navigator.vibrate(10)
-  try { await ocorrenciasService.marcarResolvida(props.ocorrencia.id) } catch { /* silencia */ }
+  try {
+    const atualizada = await ocorrenciasService.marcarResolvida(props.ocorrencia.id)
+    // O backend já muda o status pra "Resolvido" no primeiro /resolve válido — atualiza o
+    // badge aqui com o que veio de volta em vez de esperar um reload da lista.
+    if (atualizada?.status) props.ocorrencia.status = atualizada.status
+  } catch { /* silencia */ }
+}
+
+// ── Sugestão de resolução com foto de comprovação ──────────────────────────
+// fases: null (fechado) | 'pergunta' | 'upload'
+const resolverFase = ref(null)
+const fotoResolucao = ref(null)
+const fotoResolucaoPreview = ref(null)
+const comentarioResolucao = ref('')
+const enviandoResolucao = ref(false)
+const erroResolucao = ref('')
+const resolucaoInput = ref(null)
+
+function abrirFluxoResolver() {
+  if (!props.ocorrencia || jaResolveu.value) return
+  resolverFase.value = 'pergunta'
+}
+
+function fecharFluxoResolver() {
+  resolverFase.value = null
+  fotoResolucao.value = null
+  fotoResolucaoPreview.value = null
+  comentarioResolucao.value = ''
+  erroResolucao.value = ''
+}
+
+async function resolverSemFoto() {
+  fecharFluxoResolver()
+  await marcarResolvido()
+}
+
+function resolverComFoto() {
+  resolverFase.value = 'upload'
+}
+
+function onFotoResolucao(e) {
+  const file = e.target.files?.[0]
+  if (!file) return
+  fotoResolucao.value = file
+  const reader = new FileReader()
+  reader.onload = () => { fotoResolucaoPreview.value = reader.result }
+  reader.readAsDataURL(file)
+}
+
+async function enviarResolucaoComFoto() {
+  if (!props.ocorrencia || !fotoResolucao.value || enviandoResolucao.value) return
+  enviandoResolucao.value = true
+  erroResolucao.value = ''
+  try {
+    const imagem = await ocorrenciasService.uploadImagem(fotoResolucao.value)
+    const texto = montarTextoComFoto(comentarioResolucao.value, imagem.s3Url)
+    const novo = await comentariosService.adicionarComentario(props.ocorrencia.id, texto)
+    comentarios.value.push(novo)
+    comentariosAbertos.value = true
+
+    jaResolveu.value = true
+    resolucoes.value++
+    marcarFeito(props.ocorrencia.id, 'resolvido')
+    if (navigator.vibrate) navigator.vibrate(10)
+    // Mesma tolerância do fluxo simples: a foto/comentário já foram enviados, então não
+    // desfazemos isso se só o PUT /resolve falhar — o usuário já viu a ação "concluída".
+    try {
+      const atualizada = await ocorrenciasService.marcarResolvida(props.ocorrencia.id)
+      if (atualizada?.status) props.ocorrencia.status = atualizada.status
+    } catch { /* silencia */ }
+
+    fecharFluxoResolver()
+  } catch {
+    erroResolucao.value = 'Não foi possível enviar a foto. Tente novamente.'
+  } finally {
+    enviandoResolucao.value = false
+  }
 }
 
 // ── Comentários ────────────────────────────────────────────────────────────
@@ -118,11 +195,19 @@ const carregandoComentarios = ref(false)
 const comentariosAbertos = ref(false)
 const erroCarregarComentarios = ref('')
 
+const comentariosExibicao = computed(() =>
+  comentarios.value.map(c => {
+    const { texto, fotoUrl } = extrairFoto(c.text)
+    return { ...c, textoExibicao: texto, fotoUrl }
+  })
+)
+
 watch(() => props.ocorrencia?.id, async (id) => {
   comentarios.value = []
   erroComentario.value = ''
   erroCarregarComentarios.value = ''
   comentariosAbertos.value = false
+  fecharFluxoResolver()
   if (!id) return
   carregandoComentarios.value = true
   try {
@@ -172,6 +257,10 @@ function iniciais(email) {
   if (!email) return '?'
   return email.slice(0, 2).toUpperCase()
 }
+
+function abrirFotoComentario(url) {
+  window.open(url, '_blank')
+}
 </script>
 
 <template>
@@ -218,17 +307,17 @@ function iniciais(email) {
               type="button"
               aria-label="Ocorrência anterior"
               :disabled="!hasPrev"
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
               @click="anteriorPin"
             >
               <AppIcon name="chevron_left" />
             </button>
-            <span class="text-xs text-gray-400 tabular-nums flex-shrink-0">{{ currentIndex + 1 }} de {{ lista.length }}</span>
+            <span class="text-xs text-gray-500 tabular-nums flex-shrink-0">{{ currentIndex + 1 }} de {{ lista.length }}</span>
             <button
               type="button"
               aria-label="Próxima ocorrência"
               :disabled="!hasNext"
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
               @click="proximoPin"
             >
               <AppIcon name="chevron_right" />
@@ -252,22 +341,28 @@ function iniciais(email) {
           <!-- Navegação (só com múltiplas fotos) -->
           <template v-if="fotos.length > 1">
             <button type="button" aria-label="Foto anterior"
-              class="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+              class="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
               @click.stop="fotoAnterior"><AppIcon name="chevron_left" /></button>
             <button type="button" aria-label="Próxima foto"
-              class="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+              class="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
               @click.stop="proximaFoto"><AppIcon name="chevron_right" /></button>
 
             <!-- Indicadores -->
             <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+              <!-- p-2.5 -m-2.5: área de toque de ~26px sem alterar o tamanho visual da bolinha
+                   (WCAG 2.5.8 pede pelo menos 24px; a bolinha em si é só 6px de altura). -->
               <button
                 v-for="(_, i) in fotos" :key="i"
                 type="button"
                 :aria-label="`Ver foto ${i + 1}`"
-                class="h-1.5 rounded-full transition-all"
-                :class="i === fotoAtual ? 'w-4 bg-white' : 'w-1.5 bg-white/50'"
+                class="p-2.5 -m-2.5 flex items-center justify-center"
                 @click.stop="fotoAtual = i"
-              />
+              >
+                <span
+                  class="h-1.5 rounded-full transition-all block"
+                  :class="i === fotoAtual ? 'w-4 bg-white' : 'w-1.5 bg-white/50'"
+                />
+              </button>
             </div>
           </template>
 
@@ -287,33 +382,33 @@ function iniciais(email) {
         <!-- Conteúdo -->
         <div class="flex flex-col gap-3 p-5">
 
-          <!-- Descrição — card igual aos de metadados -->
-          <div class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
-            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Descrição</span>
-            <p class="text-sm text-gray-700 leading-relaxed">{{ ocorrencia.description || '—' }}</p>
+          <!-- Descrição — card igual aos de metadados; some quando a ocorrência não tem descrição -->
+          <div v-if="ocorrencia.description" class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Descrição</span>
+            <p class="text-sm text-gray-700 leading-relaxed">{{ ocorrencia.description }}</p>
           </div>
 
           <!-- Metadados em grid -->
           <div class="grid grid-cols-2 gap-3">
             <div class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
-              <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Localização</span>
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Localização</span>
               <span class="text-sm text-gray-700 leading-snug line-clamp-2">{{ enderecoResumo || '—' }}</span>
             </div>
             <div class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
-              <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Registrado em</span>
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Registrado em</span>
               <span class="text-sm text-gray-700">{{ dataResumo || '—' }}</span>
             </div>
             <div class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
-              <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Severidade</span>
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Severidade</span>
               <span class="text-sm font-semibold" :class="{
-                'text-red-500': ocorrencia.severity?.name === 'Alto',
+                'text-red-600': ocorrencia.severity?.name === 'Alto',
                 'text-amber-500': ocorrencia.severity?.name === 'Médio',
                 'text-emerald-600': ocorrencia.severity?.name === 'Baixo',
                 'text-gray-500': !ocorrencia.severity?.name,
               }">{{ ocorrencia.severity?.name || '—' }}</span>
             </div>
             <div class="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 flex flex-col gap-1">
-              <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Bairro</span>
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Bairro</span>
               <span class="text-sm text-gray-700 font-semibold">{{ ocorrencia.address?.neighborhood || '—' }}</span>
             </div>
           </div>
@@ -341,9 +436,11 @@ function iniciais(email) {
               :disabled="jaResolveu"
               :class="jaResolveu
                 ? 'bg-emerald-600 border-emerald-600 text-white cursor-not-allowed'
-                : 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'"
+                : resolverFase
+                  ? 'bg-emerald-100 border-emerald-300 text-emerald-700'
+                  : 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'"
               class="flex-1 flex flex-col items-center gap-1.5 py-4 rounded-2xl border active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-              @click="marcarResolvido"
+              @click="abrirFluxoResolver"
             >
               <AppIcon name="check_circle" size="22" />
               <span class="text-xs font-bold leading-tight text-center">Já foi<br>resolvido</span>
@@ -365,6 +462,93 @@ function iniciais(email) {
             </button>
           </div>
         </div>
+
+        <!-- Sugestão de resolução: pergunta se tem foto de comprovação -->
+        <Transition
+          enter-active-class="transition-all duration-200 ease-out"
+          enter-from-class="opacity-0 -translate-y-2"
+          enter-to-class="opacity-100 translate-y-0"
+          leave-active-class="transition-all duration-150 ease-in"
+          leave-from-class="opacity-100 translate-y-0"
+          leave-to-class="opacity-0 -translate-y-2"
+        >
+          <div v-if="resolverFase === 'pergunta'" class="mx-5 mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex flex-col gap-3">
+            <p class="text-sm font-semibold text-emerald-800">Você tem uma foto que comprova que foi resolvido?</p>
+            <div class="flex gap-2">
+              <button
+                type="button"
+                class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 active:scale-95 transition-all"
+                @click="resolverComFoto"
+              >Sim, tenho foto</button>
+              <button
+                type="button"
+                class="flex-1 py-2.5 rounded-xl bg-white border border-emerald-200 text-emerald-700 text-sm font-semibold hover:bg-emerald-100 active:scale-95 transition-all"
+                @click="resolverSemFoto"
+              >Não, só confirmar</button>
+            </div>
+            <button type="button" class="text-xs text-gray-500 text-center" @click="fecharFluxoResolver">Cancelar</button>
+          </div>
+        </Transition>
+
+        <!-- Sugestão de resolução: upload da foto + comentário opcional -->
+        <Transition
+          enter-active-class="transition-all duration-200 ease-out"
+          enter-from-class="opacity-0 -translate-y-2"
+          enter-to-class="opacity-100 translate-y-0"
+          leave-active-class="transition-all duration-150 ease-in"
+          leave-from-class="opacity-100 translate-y-0"
+          leave-to-class="opacity-0 -translate-y-2"
+        >
+          <div v-if="resolverFase === 'upload'" class="mx-5 mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex flex-col gap-3">
+            <p class="text-sm font-semibold text-emerald-800">Envie a foto da resolução</p>
+
+            <button
+              v-if="!fotoResolucaoPreview"
+              type="button"
+              class="w-full rounded-xl border-2 border-dashed border-emerald-300 py-6 flex flex-col items-center gap-2 hover:border-emerald-500 transition-colors"
+              @click="resolucaoInput.click()"
+            >
+              <AppIcon name="add_a_photo" class="text-emerald-600" size="28" />
+              <span class="text-xs font-semibold text-emerald-700">Escolher foto</span>
+            </button>
+            <div v-else class="relative">
+              <img :src="fotoResolucaoPreview" alt="Pré-visualização da foto de comprovação" class="w-full h-40 rounded-xl object-cover" />
+              <button
+                type="button"
+                aria-label="Trocar foto"
+                class="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                @click="resolucaoInput.click()"
+              ><AppIcon name="sync" size="16" /></button>
+            </div>
+            <input ref="resolucaoInput" type="file" accept="image/*" class="hidden" @change="onFotoResolucao" />
+
+            <textarea
+              v-model="comentarioResolucao"
+              placeholder="Comentário (opcional)…"
+              rows="2"
+              class="w-full resize-none rounded-xl border border-emerald-200 bg-white px-3.5 py-2.5 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-colors"
+            />
+
+            <p v-if="erroResolucao" class="text-xs text-red-600">{{ erroResolucao }}</p>
+
+            <div class="flex gap-2">
+              <button
+                type="button"
+                :disabled="!fotoResolucao || enviandoResolucao"
+                class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="enviarResolucaoComFoto"
+              >
+                <span v-if="enviandoResolucao">Enviando…</span>
+                <span v-else>Enviar e marcar como resolvido</span>
+              </button>
+              <button
+                type="button"
+                class="py-2.5 px-4 rounded-xl bg-white border border-emerald-200 text-emerald-700 text-sm font-semibold hover:bg-emerald-100 active:scale-95 transition-all"
+                @click="fecharFluxoResolver"
+              >Cancelar</button>
+            </div>
+          </div>
+        </Transition>
 
         <!-- Seção de comentários (expansível) -->
         <Transition
@@ -392,8 +576,8 @@ function iniciais(email) {
             </div>
 
             <!-- Lista -->
-            <div v-else-if="comentarios.length > 0" class="flex flex-col gap-4">
-              <div v-for="c in comentarios" :key="c.id" class="flex gap-2.5">
+            <div v-else-if="comentariosExibicao.length > 0" class="flex flex-col gap-4">
+              <div v-for="c in comentariosExibicao" :key="c.id" class="flex gap-2.5">
                 <div class="flex-shrink-0 h-8 w-8 rounded-full bg-teal-soft flex items-center justify-center text-xs font-bold text-teal">
                   <AppIcon v-if="!c.authorEmail" name="person_off" size="18" />
                   <template v-else>{{ iniciais(c.authorEmail) }}</template>
@@ -401,25 +585,35 @@ function iniciais(email) {
                 <div class="flex-1 min-w-0">
                   <div class="flex items-baseline gap-2 flex-wrap">
                     <span class="text-xs font-semibold text-gray-700 truncate">{{ c.authorEmail ? maskEmail(c.authorEmail) : 'Anônimo' }}</span>
-                    <span class="text-[10px] text-gray-400 flex-shrink-0">{{ formatarData(c.createdAt) }}</span>
+                    <span class="text-[10px] text-gray-500 flex-shrink-0">{{ formatarData(c.createdAt) }}</span>
+                    <span v-if="c.fotoUrl" class="flex items-center gap-0.5 text-[10px] font-semibold text-emerald-600 flex-shrink-0">
+                      <AppIcon name="check_circle" size="12" /> Resolução
+                    </span>
                     <button
                       v-if="auth.isAdmin"
                       type="button"
-                      class="ml-auto text-[10px] text-red-400 hover:text-red-600 flex-shrink-0"
+                      class="ml-auto text-[10px] text-red-600 hover:text-red-700 flex-shrink-0"
                       @click="excluirComentario(c.id)"
                     >
                       Excluir
                     </button>
                   </div>
-                  <p class="text-xs text-gray-600 leading-snug mt-0.5">{{ c.text }}</p>
+                  <p v-if="c.textoExibicao" class="text-xs text-gray-600 leading-snug mt-0.5">{{ c.textoExibicao }}</p>
+                  <img
+                    v-if="c.fotoUrl"
+                    :src="c.fotoUrl"
+                    alt="Foto de comprovação da resolução"
+                    class="mt-1.5 rounded-lg max-h-40 w-full object-cover cursor-zoom-in"
+                    @click="abrirFotoComentario(c.fotoUrl)"
+                  />
                 </div>
               </div>
             </div>
 
-            <p v-else-if="erroCarregarComentarios" class="text-xs text-red-500 text-center py-1">
+            <p v-else-if="erroCarregarComentarios" class="text-xs text-red-600 text-center py-1">
               {{ erroCarregarComentarios }}
             </p>
-            <p v-else-if="!carregandoComentarios" class="text-xs text-gray-400 text-center py-1">
+            <p v-else-if="!carregandoComentarios" class="text-xs text-gray-500 text-center py-1">
               Nenhum comentário ainda. Seja o primeiro!
             </p>
 
@@ -443,8 +637,8 @@ function iniciais(email) {
                   <AppIcon name="send" size="18" />
                 </button>
               </div>
-              <p v-if="erroComentario" class="text-xs text-red-500">{{ erroComentario }}</p>
-              <p class="text-[10px] text-gray-400">Enter para enviar{{ auth.isLoggedIn ? '' : ' · comentando como Anônimo' }}</p>
+              <p v-if="erroComentario" class="text-xs text-red-600">{{ erroComentario }}</p>
+              <p class="text-[10px] text-gray-500">Enter para enviar{{ auth.isLoggedIn ? '' : ' · comentando como Anônimo' }}</p>
             </div>
           </div>
         </Transition>

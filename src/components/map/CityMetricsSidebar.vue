@@ -23,7 +23,7 @@ const maxBairro    = computed(() => porBairro.value.length    > 0 ? porBairro.va
 
     <!-- Header -->
     <div class="px-6 py-5 border-b border-gray-100 sticky top-0 bg-white z-10">
-      <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide leading-none mb-1">Você está em</p>
+      <p class="text-[11px] font-medium text-gray-500 uppercase tracking-wide leading-none mb-1">Você está em</p>
       <div class="flex items-center gap-2 mb-0.5">
         <span class="text-base font-bold text-gray-800">{{ cidadeStore.cidadeAtual.nome }}</span>
         <button
@@ -59,11 +59,11 @@ const maxBairro    = computed(() => porBairro.value.length    > 0 ? porBairro.va
       <div class="grid grid-cols-2 gap-3">
         <div class="rounded-2xl bg-gray-50 border border-gray-100 p-4 flex flex-col gap-1">
           <span class="text-2xl font-extrabold text-gray-800">{{ total }}</span>
-          <span class="text-sm text-gray-400">Total de ocorrências</span>
+          <span class="text-sm text-gray-500">Total de ocorrências</span>
         </div>
         <div class="rounded-xl bg-emerald-50 border border-emerald-100 p-3.5 flex flex-col gap-0.5">
           <span class="text-2xl font-extrabold text-emerald-600">{{ taxaResolucao }}%</span>
-          <span class="text-sm text-emerald-500">Taxa de resolução</span>
+          <span class="text-sm text-emerald-700">Taxa de resolução</span>
         </div>
         <div class="rounded-xl bg-amber-50 border border-amber-100 p-3.5 flex flex-col gap-0.5">
           <span class="text-2xl font-extrabold text-amber-500">{{ porStatus['Aberto'] ?? 0 }}</span>
@@ -79,10 +79,10 @@ const maxBairro    = computed(() => porBairro.value.length    > 0 ? porBairro.va
 
       <!-- Categorias mais reportadas -->
       <div>
-        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Categorias mais reportadas</h3>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Categorias mais reportadas</h3>
         <div v-if="porCategoria.length > 0" class="flex flex-col gap-2">
           <div v-for="([nome, qtd], i) in porCategoria" :key="nome" class="flex items-center gap-3 py-1">
-            <span class="text-xs font-bold text-gray-300 w-3 text-right flex-shrink-0">{{ i + 1 }}</span>
+            <span class="text-xs font-bold text-gray-500 w-3 text-right flex-shrink-0">{{ i + 1 }}</span>
             <span class="text-sm text-gray-700 flex-1 truncate">{{ nome }}</span>
             <div class="w-16 h-1.5 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
               <div class="h-full rounded-full bg-teal transition-all duration-500" :style="{ width: `${(qtd / maxCategoria) * 100}%` }" />
@@ -90,17 +90,17 @@ const maxBairro    = computed(() => porBairro.value.length    > 0 ? porBairro.va
             <span class="text-sm font-semibold text-gray-700 w-5 text-right flex-shrink-0">{{ qtd }}</span>
           </div>
         </div>
-        <p v-else class="text-sm text-gray-400">Sem dados ainda</p>
+        <p v-else class="text-sm text-gray-500">Sem dados ainda</p>
       </div>
 
       <hr class="border-gray-100" />
 
       <!-- Bairros com mais ocorrências -->
       <div>
-        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Bairros com mais ocorrências</h3>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Bairros com mais ocorrências</h3>
         <div v-if="porBairro.length > 0" class="flex flex-col gap-2">
           <div v-for="([nome, qtd], i) in porBairro" :key="nome" class="flex items-center gap-3 py-1">
-            <span class="text-xs font-bold text-gray-300 w-3 text-right flex-shrink-0">{{ i + 1 }}</span>
+            <span class="text-xs font-bold text-gray-500 w-3 text-right flex-shrink-0">{{ i + 1 }}</span>
             <span class="text-sm text-gray-700 flex-1 truncate">{{ nome }}</span>
             <div class="w-16 h-1.5 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
               <div class="h-full rounded-full bg-violet-400 transition-all duration-500" :style="{ width: `${(qtd / maxBairro) * 100}%` }" />
@@ -108,7 +108,7 @@ const maxBairro    = computed(() => porBairro.value.length    > 0 ? porBairro.va
             <span class="text-sm font-semibold text-gray-700 w-5 text-right flex-shrink-0">{{ qtd }}</span>
           </div>
         </div>
-        <p v-else class="text-sm text-gray-400">Sem dados ainda</p>
+        <p v-else class="text-sm text-gray-500">Sem dados ainda</p>
       </div>
 
     </div>

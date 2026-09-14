@@ -86,7 +86,7 @@ function fechar() {
 
               <button
                 type="button"
-                class="w-full min-h-[48px] sm:min-h-[52px] rounded-xl bg-teal text-white font-bold text-sm sm:text-base hover:bg-teal-dark active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                class="w-full min-h-[48px] sm:min-h-[52px] rounded-xl bg-teal-dark text-white font-bold text-sm sm:text-base hover:bg-teal-darker active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
                 @click="fechar"
               >
                 Começar agora

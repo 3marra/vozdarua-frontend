@@ -84,7 +84,7 @@ onMounted(async () => {
         <h2 class="text-lg font-bold text-gray-900">Selecionar cidade</h2>
         <button
           type="button"
-          class="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
           @click="emit('close')"
           aria-label="Fechar"
         ><AppIcon name="close" /></button>
@@ -93,7 +93,7 @@ onMounted(async () => {
       <!-- Busca -->
       <div class="px-5 pb-3">
         <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all">
-          <AppIcon name="search" class="text-gray-400 flex-shrink-0" size="18" />
+          <AppIcon name="search" class="text-gray-500 flex-shrink-0" size="18" />
           <input
             ref="searchInput"
             v-model="busca"
@@ -104,7 +104,7 @@ onMounted(async () => {
           <button
             v-if="busca"
             type="button"
-            class="text-gray-400 hover:text-gray-600 transition-colors"
+            class="text-gray-500 hover:text-gray-600 transition-colors"
             @click="busca = ''"
           ><AppIcon name="close" size="16" /></button>
         </div>
@@ -115,7 +115,7 @@ onMounted(async () => {
 
         <!-- Resultados de busca -->
         <template v-if="busca.trim()">
-          <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2 px-2">
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">
             {{ resultados.length ? `${resultados.length} resultado${resultados.length !== 1 ? 's' : ''}` : 'Nenhum resultado' }}
           </p>
           <div class="flex flex-col">
@@ -130,7 +130,7 @@ onMounted(async () => {
             >
               <span class="text-teal self-center"><AppIcon v-if="cidade.id === cidadeStore.cidadeAtual.id" name="check" size="18" /></span>
               <span class="text-sm self-center" :class="cidade.id === cidadeStore.cidadeAtual.id ? 'font-semibold text-teal' : 'text-gray-800'">{{ cidade.name }}</span>
-              <span class="text-xs text-gray-400 font-medium self-center bg-gray-100 rounded px-1.5 py-0.5 ml-2">{{ cidade.state?.uf }}</span>
+              <span class="text-xs text-gray-500 font-medium self-center bg-gray-100 rounded px-1.5 py-0.5 ml-2">{{ cidade.state?.uf }}</span>
             </button>
           </div>
         </template>
@@ -138,7 +138,7 @@ onMounted(async () => {
         <!-- Estado padrão: cidade atual + próximas -->
         <template v-else>
           <!-- Cidade selecionada -->
-          <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-1 px-2">Selecionada</p>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">Selecionada</p>
           <button
             type="button"
             class="grid w-full px-3 py-3 rounded-2xl bg-teal/10 text-left mb-4"
@@ -152,7 +152,7 @@ onMounted(async () => {
 
           <!-- Cidades próximas -->
           <template v-if="proximas.length">
-            <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-1 px-2">Cidades próximas</p>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">Cidades próximas</p>
             <div class="flex flex-col">
               <button
                 v-for="cidade in proximas"
@@ -165,8 +165,8 @@ onMounted(async () => {
                 <span class="self-center" />
                 <span class="text-sm text-gray-800 self-center">{{ cidade.name }}</span>
                 <div class="flex items-center gap-1.5 ml-2 self-center">
-                  <span class="text-xs text-gray-400">{{ cidade.distanceKm }} km</span>
-                  <span class="text-xs text-gray-400 font-medium bg-gray-100 rounded px-1.5 py-0.5">{{ cidade.uf }}</span>
+                  <span class="text-xs text-gray-500">{{ cidade.distanceKm }} km</span>
+                  <span class="text-xs text-gray-500 font-medium bg-gray-100 rounded px-1.5 py-0.5">{{ cidade.uf }}</span>
                 </div>
               </button>
             </div>

@@ -50,10 +50,10 @@ const onSubmit = handleSubmit(async (values) => {
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-5">
       <div>
         <h1 class="text-lg font-bold text-gray-800">Redefinir senha</h1>
-        <p class="text-xs text-gray-400 mt-0.5">Voz da Rua</p>
+        <p class="text-xs text-gray-500 mt-0.5">Voz da Rua</p>
       </div>
 
-      <p v-if="!token" class="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2.5 leading-relaxed">
+      <p v-if="!token" class="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2.5 leading-relaxed">
         Link inválido: nenhum token informado. Solicite um novo link de redefinição de senha.
       </p>
 
@@ -61,7 +61,7 @@ const onSubmit = handleSubmit(async (values) => {
         <AppField v-model="password" label="Nova senha" type="password" placeholder="••••••" :error="errors.password" />
         <AppField v-model="confirmarSenha" label="Confirmar nova senha" type="password" placeholder="••••••" :error="errors.confirmarSenha" />
 
-        <p v-if="erro" class="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{{ erro }}</p>
+        <p v-if="erro" class="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">{{ erro }}</p>
 
         <AppButton type="submit" :disabled="enviando" class="mt-1">
           {{ enviando ? 'Aguarde…' : 'Redefinir senha' }}

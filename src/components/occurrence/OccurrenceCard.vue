@@ -42,7 +42,7 @@ const severidadeBorda = computed(() => {
         <OccurrenceStatus :status="props.ocorrencia.status" />
       </div>
       <p class="text-xs text-gray-500 flex items-center gap-1"><AppIcon name="location_on" size="14" /> {{ enderecoResumo }}</p>
-      <p class="text-xs text-gray-400">{{ dataResumo }}</p>
+      <p class="text-xs text-gray-500">{{ dataResumo }}</p>
     </div>
 
     <!-- Thumbnail foto -->

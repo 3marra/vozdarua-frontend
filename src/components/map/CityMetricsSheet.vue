@@ -69,7 +69,7 @@ function onTouchEnd(e) {
       <!-- Linha 1: cidade + botão trocar + chevron -->
       <div class="flex items-center justify-between w-full">
         <div>
-          <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide leading-none mb-0.5">Você está em</p>
+          <p class="text-[11px] font-medium text-gray-500 uppercase tracking-wide leading-none mb-0.5">Você está em</p>
           <div class="flex items-center gap-2">
             <span class="text-base font-bold text-gray-800">{{ cidadeStore.cidadeAtual.nome }}</span>
             <button
@@ -79,7 +79,7 @@ function onTouchEnd(e) {
             >trocar</button>
           </div>
         </div>
-        <span class="text-gray-400 transition-transform duration-300" :class="expanded ? 'rotate-180' : ''">
+        <span class="text-gray-500 transition-transform duration-300" :class="expanded ? 'rotate-180' : ''">
           <AppIcon name="keyboard_arrow_up" />
         </span>
       </div>
@@ -124,10 +124,10 @@ function onTouchEnd(e) {
       <template v-else>
         <!-- Ranking categorias -->
         <div>
-          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Categorias mais reportadas</h3>
+          <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Categorias mais reportadas</h3>
           <div v-if="porCategoria.length > 0" class="flex flex-col gap-2">
             <div v-for="([nome, qtd], i) in porCategoria" :key="nome" class="flex items-center gap-3 py-1">
-              <span class="text-xs font-bold text-gray-300 w-3 flex-shrink-0" aria-hidden="true">{{ i + 1 }}</span>
+              <span class="text-xs font-bold text-gray-500 w-3 flex-shrink-0" aria-hidden="true">{{ i + 1 }}</span>
               <span class="text-sm text-gray-700 flex-1 truncate">{{ nome }}</span>
               <div class="w-16 h-1.5 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                 <div class="h-full rounded-full bg-teal transition-all duration-500" :style="{ width: `${(qtd / maxCategoria) * 100}%` }" />
@@ -140,10 +140,10 @@ function onTouchEnd(e) {
 
         <!-- Bairros com mais ocorrências -->
         <div>
-          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Bairros com mais ocorrências</h3>
+          <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Bairros com mais ocorrências</h3>
           <div v-if="porBairro.length > 0" class="flex flex-col gap-2">
             <div v-for="([nome, qtd], i) in porBairro" :key="nome" class="flex items-center gap-3 py-1">
-              <span class="text-xs font-bold text-gray-300 w-3 flex-shrink-0" aria-hidden="true">{{ i + 1 }}</span>
+              <span class="text-xs font-bold text-gray-500 w-3 flex-shrink-0" aria-hidden="true">{{ i + 1 }}</span>
               <span class="text-sm text-gray-700 flex-1 truncate">{{ nome }}</span>
               <div class="w-16 h-1.5 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                 <div class="h-full rounded-full bg-violet-400 transition-all duration-500" :style="{ width: `${(qtd / maxBairro) * 100}%` }" />

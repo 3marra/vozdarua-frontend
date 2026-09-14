@@ -45,14 +45,14 @@ const rankingCidades = computed(() =>
 const maxContrib = computed(() => rankingContribuidores.value[0]?.total ?? 1)
 const maxCidade  = computed(() => rankingCidades.value[0]?.total ?? 1)
 
-const medalhaCores = ['text-amber-400', 'text-gray-400', 'text-amber-700']
+const medalhaCores = ['text-amber-400', 'text-gray-500', 'text-amber-700']
 
 function iniciais(nome) {
   return nome.split(' ').slice(0, 2).map(p => p[0]?.toUpperCase()).join('')
 }
 
 const avatarColors = [
-  'bg-teal text-white', 'bg-violet-500 text-white', 'bg-amber-400 text-white',
+  'bg-teal-dark text-white', 'bg-violet-500 text-white', 'bg-amber-400 text-white',
   'bg-rose-400 text-white', 'bg-sky-500 text-white', 'bg-emerald-500 text-white',
 ]
 </script>
@@ -63,7 +63,7 @@ const avatarColors = [
     <!-- Header -->
     <div class="px-5 pt-7 pb-4">
       <h1 class="text-xl font-bold text-gray-800">Ranking</h1>
-      <p class="text-sm text-gray-400 mt-1">Baseado nas ocorrências registradas em {{ cidadeStore.cidadeAtual.nome }}</p>
+      <p class="text-sm text-gray-500 mt-1">Baseado nas ocorrências registradas em {{ cidadeStore.cidadeAtual.nome }}</p>
     </div>
 
     <!-- Skeleton -->
@@ -85,12 +85,12 @@ const avatarColors = [
 
       <!-- ── Contribuidores ── -->
       <section class="px-5 mb-8">
-        <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4">Contribuidores</h2>
+        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-4">Contribuidores</h2>
 
         <div v-if="rankingContribuidores.length === 0" class="text-center py-10">
-          <div class="flex justify-center mb-2"><AppIcon name="person_off" size="32" class="text-gray-300" /></div>
-          <p class="text-sm text-gray-400">Nenhum contribuidor identificado ainda.</p>
-          <p class="text-sm text-gray-300 mt-1">Ocorrências anônimas não entram no ranking.</p>
+          <div class="flex justify-center mb-2"><AppIcon name="person_off" size="32" class="text-gray-500" /></div>
+          <p class="text-sm text-gray-500">Nenhum contribuidor identificado ainda.</p>
+          <p class="text-sm text-gray-500 mt-1">Ocorrências anônimas não entram no ranking.</p>
         </div>
 
         <div v-else class="flex flex-col gap-2">
@@ -103,7 +103,7 @@ const avatarColors = [
             <!-- Posição -->
             <div class="w-7 text-center flex-shrink-0">
               <AppIcon v-if="i < 3" name="workspace_premium" :class="medalhaCores[i]" fill />
-              <span v-else class="text-xs font-bold text-gray-400">{{ i + 1 }}</span>
+              <span v-else class="text-xs font-bold text-gray-500">{{ i + 1 }}</span>
             </div>
 
             <!-- Avatar -->
@@ -129,7 +129,7 @@ const avatarColors = [
             <!-- Contadores -->
             <div class="text-right flex-shrink-0">
               <p class="text-base font-extrabold text-gray-800">{{ usuario.total }}</p>
-              <p class="text-sm text-emerald-500 font-semibold flex items-center gap-0.5 justify-end">{{ usuario.taxaResolucao }}% <AppIcon name="check" size="14" /></p>
+              <p class="text-sm text-emerald-700 font-semibold flex items-center gap-0.5 justify-end">{{ usuario.taxaResolucao }}% <AppIcon name="check" size="14" /></p>
             </div>
           </div>
         </div>
@@ -139,15 +139,15 @@ const avatarColors = [
 
       <!-- ── Cidades ── -->
       <section class="px-5">
-        <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4">Cidades com mais ocorrências</h2>
+        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-4">Cidades com mais ocorrências</h2>
 
         <div v-if="rankingCidades.length === 0" class="text-center py-8">
-          <p class="text-sm text-gray-400">Sem dados de localização disponíveis.</p>
+          <p class="text-sm text-gray-500">Sem dados de localização disponíveis.</p>
         </div>
 
         <div v-else class="flex flex-col gap-1">
           <div v-for="(cidade, i) in rankingCidades" :key="cidade.cityId" class="flex items-center gap-3 py-2">
-            <span class="text-xs font-bold text-gray-300 w-4 text-right flex-shrink-0">{{ i + 1 }}</span>
+            <span class="text-xs font-bold text-gray-500 w-4 text-right flex-shrink-0">{{ i + 1 }}</span>
             <span class="text-sm text-gray-700 flex-1 truncate">{{ cidade.name }}</span>
             <div class="w-24 h-2 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
               <div
@@ -156,7 +156,7 @@ const avatarColors = [
               />
             </div>
             <span class="text-sm font-semibold text-gray-700 w-6 text-right flex-shrink-0">{{ cidade.total }}</span>
-            <span class="text-xs text-emerald-500 w-10 flex items-center justify-end gap-0.5 flex-shrink-0">{{ cidade.taxaResolucao }}% <AppIcon name="check" size="12" /></span>
+            <span class="text-xs text-emerald-700 w-10 flex items-center justify-end gap-0.5 flex-shrink-0">{{ cidade.taxaResolucao }}% <AppIcon name="check" size="12" /></span>
           </div>
         </div>
       </section>

@@ -28,7 +28,7 @@ function irPerfil() {
   <div class="relative">
     <button
       type="button"
-      class="flex items-center justify-center h-8 w-8 rounded-full bg-white/20 text-white text-xs font-bold hover:bg-white/30 transition-colors ring-2 ring-white/30"
+      class="flex items-center justify-center h-10 w-10 rounded-full bg-white/20 text-white text-xs font-bold hover:bg-white/30 transition-colors ring-2 ring-white/30"
       @click="open = !open"
     >
       {{ iniciais(user?.email) }}
@@ -38,12 +38,12 @@ function irPerfil() {
     <Transition name="dropdown">
       <div
         v-if="open"
-        class="absolute right-0 top-10 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-[3000] overflow-hidden"
+        class="absolute right-0 top-12 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-[3000] overflow-hidden"
       >
         <!-- Info do usuário -->
         <div class="px-4 py-3 border-b border-gray-100">
           <p class="text-xs font-bold text-gray-800 truncate">{{ user?.email }}</p>
-          <p class="text-[11px] text-gray-400">{{ user?.phone }}</p>
+          <p class="text-[11px] text-gray-500">{{ user?.phone }}</p>
         </div>
 
         <div class="py-1">
@@ -56,7 +56,7 @@ function irPerfil() {
           </button>
           <button
             type="button"
-            class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 text-left"
+            class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 text-left"
             @click="sair"
           >
             <AppIcon name="logout" /> Sair da conta

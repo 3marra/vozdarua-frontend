@@ -94,7 +94,7 @@ onUnmounted(() => {
               >Agora não</button>
               <button
                 type="button"
-                class="flex-1 min-h-[48px] rounded-xl bg-teal text-white font-bold text-sm hover:bg-teal-dark active:scale-95 transition-all"
+                class="flex-1 min-h-[48px] rounded-xl bg-teal-dark text-white font-bold text-sm hover:bg-teal-darker active:scale-95 transition-all"
                 @click="instalar"
               >Instalar</button>
             </div>
@@ -129,7 +129,7 @@ onUnmounted(() => {
             </ol>
             <button
               type="button"
-              class="w-full min-h-[48px] rounded-xl bg-teal text-white font-bold text-sm hover:bg-teal-dark active:scale-95 transition-all"
+              class="w-full min-h-[48px] rounded-xl bg-teal-dark text-white font-bold text-sm hover:bg-teal-darker active:scale-95 transition-all"
               @click="dismiss"
             >Entendi</button>
           </div>

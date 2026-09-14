@@ -1,13 +1,18 @@
 <script setup>
 defineProps({
-  variant: { type: String, default: 'primary' }, // primary | outline | ghost
+  variant: { type: String, default: 'primary' }, // primary | secondary | outline | ghost
   type: { type: String, default: 'button' },
   disabled: { type: Boolean, default: false },
 })
 defineEmits(['click'])
 
 const VARIANTS = {
-  primary: 'bg-teal text-white hover:bg-teal-dark active:scale-95',
+  // bg-teal-dark (não bg-teal) em repouso: texto branco sobre bg-teal só fica em 3.7:1,
+  // abaixo do mínimo de 4.5:1 do WCAG 1.4.3 pra texto normal. teal-dark passa em 5.5:1.
+  primary: 'bg-teal-dark text-white hover:bg-teal-darker active:scale-95',
+  // Preenchido e com borda mais forte que "outline" — pra ações secundárias que ainda
+  // precisam de destaque visual (ex: trocar uma seleção já feita), sem competir com a primária.
+  secondary: 'bg-teal-soft text-teal-dark border-1.5 border-teal-mid hover:bg-teal-mid/40 active:scale-95',
   outline: 'bg-white text-teal-dark border-1.5 border-teal hover:bg-teal-soft active:scale-95',
   ghost: 'bg-transparent text-teal hover:underline',
 }

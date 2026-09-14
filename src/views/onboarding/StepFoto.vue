@@ -63,7 +63,11 @@ function continuar() {
 
     <div v-else class="flex flex-col gap-3">
       <img :src="preview" alt="Pré-visualização" class="w-full rounded-xl object-cover max-h-80" />
-      <AppButton variant="outline" @click="trocarFoto">Trocar foto</AppButton>
+      <AppButton variant="secondary" @click="trocarFoto">
+        <span class="inline-flex items-center justify-center gap-2">
+          <AppIcon name="sync" size="18" /> Trocar foto
+        </span>
+      </AppButton>
     </div>
 
     <input ref="cameraInput" type="file" accept="image/*" capture="environment" class="hidden" @change="onArquivo" />

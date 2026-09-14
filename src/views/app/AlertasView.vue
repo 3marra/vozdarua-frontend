@@ -6,7 +6,7 @@
 <template>
   <div class="flex flex-col gap-3 p-5 max-w-2xl mx-auto w-full">
     <h1 class="text-lg font-bold text-gray-800">Alertas</h1>
-    <p class="text-sm text-gray-400 text-center py-10">
+    <p class="text-sm text-gray-500 text-center py-10">
       Essa funcionalidade ainda não está disponível na API atual.
     </p>
   </div>

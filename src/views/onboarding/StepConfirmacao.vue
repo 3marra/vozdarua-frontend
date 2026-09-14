@@ -31,7 +31,7 @@ function continuar() {
         <span class="font-semibold text-gray-700">{{ rascunho.categoria?.l }}</span>
       </div>
       <p class="text-gray-600">{{ rascunho.descricao }}</p>
-      <p class="text-gray-400 text-xs flex items-center gap-1"><AppIcon name="location_on" size="14" /> {{ enderecoResumo }}</p>
+      <p class="text-gray-500 text-xs flex items-center gap-1"><AppIcon name="location_on" size="14" /> {{ enderecoResumo }}</p>
     </div>
 
     <div class="sticky bottom-0 bg-white pt-3">

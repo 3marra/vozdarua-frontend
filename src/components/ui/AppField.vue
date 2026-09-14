@@ -57,7 +57,7 @@ function onInput(e) {
         type="button"
         :aria-label="senhaVisivel ? 'Ocultar senha' : 'Mostrar senha'"
         tabindex="-1"
-        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-600"
         @click="senhaVisivel = !senhaVisivel"
       >
         <AppIcon :name="senhaVisivel ? 'visibility_off' : 'visibility'" size="18" />
@@ -65,8 +65,8 @@ function onInput(e) {
       <label
         v-if="label"
         :for="fieldId"
-        class="pointer-events-none absolute left-3.5 top-3.5 text-sm text-gray-400 transition-all duration-150 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-teal peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500"
-        :class="error ? 'peer-focus:text-red-400' : ''"
+        class="pointer-events-none absolute left-3.5 top-3.5 text-sm text-gray-500 transition-all duration-150 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-teal peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500"
+        :class="error ? 'peer-focus:text-red-600' : ''"
       >
         {{ label }}
       </label>
@@ -75,7 +75,7 @@ function onInput(e) {
       v-if="error"
       :id="errorId"
       role="alert"
-      class="text-xs text-red-500 px-1"
+      class="text-xs text-red-600 px-1"
     >{{ error }}</p>
   </div>
 </template>

@@ -25,11 +25,9 @@ function continuar() {
       <AppButton :disabled="!ocorrencias.rascunho.descricao?.trim()" @click="continuar">
         Continuar
       </AppButton>
-      <button
-        type="button"
-        class="w-full py-3 text-sm font-semibold text-gray-400 hover:text-gray-600 transition-colors"
-        @click="ocorrencias.rascunho.descricao = ''; continuar()"
-      >Pular esta etapa</button>
+      <AppButton variant="secondary" @click="ocorrencias.rascunho.descricao = ''; continuar()">
+        Pular esta etapa
+      </AppButton>
     </div>
   </div>
 </template>

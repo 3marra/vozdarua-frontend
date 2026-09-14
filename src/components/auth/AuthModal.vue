@@ -106,11 +106,11 @@ const onSubmit = handleSubmit(async (values) => {
               <h2 class="text-base font-bold text-gray-800">
                 {{ modo === 'login' ? 'Entrar na conta' : modo === 'cadastro' ? 'Criar conta' : 'Recuperar senha' }}
               </h2>
-              <p class="text-xs text-gray-400 mt-0.5">Voz da Rua</p>
+              <p class="text-xs text-gray-500 mt-0.5">Voz da Rua</p>
             </div>
             <button
               type="button"
-              class="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100"
+              class="flex h-10 w-10 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100"
               @click="emit('close')"
             ><AppIcon name="close" /></button>
           </div>
@@ -159,7 +159,7 @@ const onSubmit = handleSubmit(async (values) => {
               @click="trocarModo('esqueci')"
             >Esqueci minha senha</button>
 
-            <p v-if="erro" class="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{{ erro }}</p>
+            <p v-if="erro" class="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">{{ erro }}</p>
 
             <AppButton type="submit" :disabled="enviando" class="mt-1">
               {{ enviando ? 'Aguarde...' : (modo === 'login' ? 'Entrar' : modo === 'cadastro' ? 'Criar conta' : 'Enviar link de redefinição') }}

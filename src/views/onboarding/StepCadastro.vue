@@ -141,29 +141,26 @@ function alternarModo() {
     </form>
 
     <!-- Alternar modo -->
-    <button
-      type="button"
-      class="w-full py-3 text-sm font-semibold rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors mb-5"
-      @click="alternarModo"
-    >
+    <AppButton variant="secondary" class="mb-5" @click="alternarModo">
       {{ modo === 'cadastro' ? 'Já tenho conta — Entrar' : 'Criar uma nova conta' }}
-    </button>
+    </AppButton>
 
     <!-- Divisor -->
     <div class="flex items-center gap-3 mb-5">
       <div class="flex-1 h-px bg-gray-100" />
-      <span class="text-xs text-gray-400 font-medium">ou</span>
+      <span class="text-xs text-gray-500 font-medium">ou</span>
       <div class="flex-1 h-px bg-gray-100" />
     </div>
 
-    <!-- Anônimo -->
+    <!-- Anônimo: mesma paleta "secundária" (teal-soft/teal-mid) do restante da jornada,
+         mas com duas linhas — por isso não usa o AppButton, que só suporta uma. -->
     <button
       type="button"
-      class="flex flex-col items-center gap-1 w-full py-3.5 rounded-xl bg-gray-50 border border-gray-100 hover:bg-gray-100 transition-colors"
+      class="flex flex-col items-center gap-1 w-full py-3.5 rounded-xl bg-teal-soft border-1.5 border-teal-mid hover:bg-teal-mid/40 active:scale-95 transition-all"
       @click="seguirAnonimo"
     >
-      <span class="text-sm font-semibold text-gray-600">Continuar sem cadastro</span>
-      <span class="text-xs text-gray-400">Sua ocorrência será registrada como anônima</span>
+      <span class="text-sm font-semibold text-teal-dark">Continuar sem cadastro</span>
+      <span class="text-xs text-teal">Sua ocorrência será registrada como anônima</span>
     </button>
     </template>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import AuthModal from '@/components/auth/AuthModal.vue'
@@ -45,6 +45,16 @@ function navTab(path) {
 function isActive(path) {
   return route.path === path
 }
+
+// Durante a jornada de registro de ocorrência a aba inferior fica escondida — só volta
+// ao sair da tela (finalizar ou voltar do primeiro passo, que navega pra fora da rota).
+const emRegistro = computed(() => route.path.startsWith('/app/registrar'))
+
+const mainEl = ref(null)
+// Com overflow:hidden no <main> durante o registro, um scrollTop residual de uma
+// navegação anterior (quando <main> ainda scrollava) fica "congelado" e desloca todo
+// o conteúdo pra cima, cortando o topo. Zera o scroll a cada troca de rota pra evitar isso.
+watch(() => route.path, () => { if (mainEl.value) mainEl.value.scrollTop = 0 })
 </script>
 
 <template>
@@ -57,7 +67,7 @@ function isActive(path) {
         <button
           type="button"
           aria-label="Menu"
-          class="flex flex-col justify-center gap-[5px] w-8 h-8 items-center"
+          class="flex flex-col justify-center gap-[5px] w-10 h-10 items-center"
           @click="menuAberto = !menuAberto"
         >
           <span class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200" :class="menuAberto ? 'rotate-45 translate-y-[7px]' : ''" />
@@ -157,13 +167,14 @@ function isActive(path) {
       </div>
     </header>
 
-    <!-- Conteúdo principal -->
-    <main class="flex-1 flex flex-col overflow-y-auto pb-16 lg:pb-0">
+    <!-- Conteúdo principal: durante o registro o scroll é do próprio OnboardingLayout,
+         não daqui — senão fica scroll duplo (este + o interno da jornada). -->
+    <main ref="mainEl" class="flex-1 flex flex-col" :class="emRegistro ? 'overflow-hidden' : 'overflow-y-auto pb-16 lg:pb-0'">
       <router-view />
     </main>
 
-    <!-- Bottom nav mobile -->
-    <nav class="lg:hidden fixed bottom-0 left-0 right-0 flex items-end border-t border-gray-100 bg-white z-[2000]" role="navigation" aria-label="Navegação principal">
+    <!-- Bottom nav mobile: escondida durante o registro de ocorrência -->
+    <nav v-if="!emRegistro" class="lg:hidden fixed bottom-0 left-0 right-0 flex items-end border-t border-gray-100 bg-white z-[2000]" role="navigation" aria-label="Navegação principal">
       <!-- Tabs esquerda -->
       <button
         v-for="tab in TABS_ESQUERDA"
@@ -172,7 +183,7 @@ function isActive(path) {
         :aria-label="tab.label"
         :aria-current="isActive(tab.path) ? 'page' : undefined"
         class="flex-1 flex flex-col items-center justify-center py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-inset"
-        :class="isActive(tab.path) ? 'text-teal' : 'text-gray-400'"
+        :class="isActive(tab.path) ? 'text-teal' : 'text-gray-500'"
         @click="navTab(tab.path)"
       >
         <span
@@ -203,7 +214,7 @@ function isActive(path) {
         :aria-label="tab.label"
         :aria-current="isActive(tab.path) ? 'page' : undefined"
         class="flex-1 flex flex-col items-center justify-center py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-inset"
-        :class="isActive(tab.path) ? 'text-teal' : 'text-gray-400'"
+        :class="isActive(tab.path) ? 'text-teal' : 'text-gray-500'"
         @click="navTab(tab.path)"
       >
         <span

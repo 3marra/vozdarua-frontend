@@ -78,7 +78,7 @@ function novoFeedback() {
             type="button"
             class="flex-1 py-2.5 rounded-2xl text-sm font-semibold border transition-colors flex items-center justify-center gap-1.5"
             :class="form.tipo === opt.value
-              ? 'bg-teal text-white border-teal'
+              ? 'bg-teal-dark text-white border-teal-dark'
               : 'bg-white text-gray-600 border-gray-200 hover:border-teal/40 hover:text-teal'"
             @click="form.tipo = opt.value"
           ><AppIcon :name="opt.icon" size="16" />{{ opt.label }}</button>
@@ -88,7 +88,7 @@ function novoFeedback() {
       <!-- Mensagem -->
       <div>
         <label for="mensagem" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
-          Mensagem <span class="text-red-400">*</span>
+          Mensagem <span class="text-red-600">*</span>
         </label>
         <textarea
           id="mensagem"
@@ -97,13 +97,13 @@ function novoFeedback() {
           placeholder="Conte o que você achou, o que falta, o que poderia ser diferente..."
           class="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 resize-none outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 transition-all"
         />
-        <p v-if="erro" class="text-xs text-red-500 mt-1">{{ erro }}</p>
+        <p v-if="erro" class="text-xs text-red-600 mt-1">{{ erro }}</p>
       </div>
 
       <!-- Nome (opcional) -->
       <div>
         <label for="nome" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
-          Seu nome <span class="text-gray-400 font-normal normal-case">(opcional)</span>
+          Seu nome <span class="text-gray-500 font-normal normal-case">(opcional)</span>
         </label>
         <input
           id="nome"
@@ -117,7 +117,7 @@ function novoFeedback() {
       <!-- E-mail (opcional) -->
       <div>
         <label for="email" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
-          E-mail <span class="text-gray-400 font-normal normal-case">(opcional — para respondermos)</span>
+          E-mail <span class="text-gray-500 font-normal normal-case">(opcional — para respondermos)</span>
         </label>
         <input
           id="email"
@@ -131,7 +131,7 @@ function novoFeedback() {
       <button
         type="submit"
         :disabled="enviando"
-        class="w-full py-4 rounded-2xl bg-teal text-white font-bold text-sm shadow-lg shadow-teal/30 hover:bg-teal-dark active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        class="w-full py-4 rounded-2xl bg-teal-dark text-white font-bold text-sm shadow-lg shadow-teal/30 hover:bg-teal-darker active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span v-if="enviando" class="animate-pulse">Enviando…</span>
         <span v-else>Enviar feedback</span>

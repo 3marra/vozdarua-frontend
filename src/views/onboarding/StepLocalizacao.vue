@@ -291,7 +291,7 @@ function continuar() {
       <!-- Campo de busca de endereço -->
       <div class="relative">
         <div class="relative">
-          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
             <AppIcon name="search" />
           </span>
           <input
@@ -319,7 +319,7 @@ function continuar() {
             @mousedown.prevent="selecionarSugestao(s)"
           >
             <span class="font-medium text-gray-900">{{ s.rua || s.label.split(',')[0] }}</span>
-            <span class="block text-xs text-gray-400 mt-0.5">{{ [s.bairro, s.cidade, s.estado].filter(Boolean).join(', ') }}</span>
+            <span class="block text-xs text-gray-500 mt-0.5">{{ [s.bairro, s.cidade, s.estado].filter(Boolean).join(', ') }}</span>
           </li>
         </ul>
       </div>
@@ -327,7 +327,7 @@ function continuar() {
       <!-- Divisor -->
       <div class="flex items-center gap-3">
         <div class="flex-1 h-px bg-gray-100" />
-        <span class="text-xs text-gray-400 font-medium">ou</span>
+        <span class="text-xs text-gray-500 font-medium">ou</span>
         <div class="flex-1 h-px bg-gray-100" />
       </div>
 
@@ -346,7 +346,7 @@ function continuar() {
     <!-- Fase CEP: campo com busca automática -->
     <div v-else-if="fase === 'cep'" class="flex flex-col gap-4">
       <div class="rounded-xl bg-gray-50 border border-gray-200 p-3.5 flex gap-2.5 items-start">
-        <AppIcon name="search" class="text-gray-400" />
+        <AppIcon name="search" class="text-gray-500" />
         <p class="text-xs text-gray-500 leading-relaxed">
           Digite o CEP — o endereço será preenchido automaticamente.
         </p>
@@ -372,13 +372,13 @@ function continuar() {
           ><AppIcon name="progress_activity" size="16" /></span>
           <span
             v-else-if="geo.rua && !erro"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-700"
           ><AppIcon name="check" size="18" /></span>
         </div>
-        <p v-if="erro" class="text-xs text-red-500 mt-0.5">{{ erro }}</p>
+        <p v-if="erro" class="text-xs text-red-600 mt-0.5">{{ erro }}</p>
       </div>
 
-      <AppButton variant="ghost" @click="naoSeiCep">Buscar pelo nome da rua</AppButton>
+      <AppButton variant="secondary" @click="naoSeiCep">Buscar pelo nome da rua</AppButton>
     </div>
 
     <!-- Fase preenchendo: endereço encontrado, campos restantes -->
@@ -410,7 +410,7 @@ function continuar() {
     <div v-else-if="fase === 'manual'" class="flex flex-col gap-4">
       <div class="relative">
         <div class="relative">
-          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
             <AppIcon name="search" />
           </span>
           <input
@@ -437,12 +437,12 @@ function continuar() {
             @mousedown.prevent="selecionarSugestao(s)"
           >
             <span class="font-medium text-gray-900">{{ s.rua || s.label.split(',')[0] }}</span>
-            <span class="block text-xs text-gray-400 mt-0.5">{{ [s.bairro, s.cidade, s.estado].filter(Boolean).join(', ') }}</span>
+            <span class="block text-xs text-gray-500 mt-0.5">{{ [s.bairro, s.cidade, s.estado].filter(Boolean).join(', ') }}</span>
           </li>
         </ul>
       </div>
 
-      <AppButton variant="ghost" @click="fase = 'cep'">Informar pelo CEP</AppButton>
+      <AppButton variant="secondary" @click="fase = 'cep'">Informar pelo CEP</AppButton>
     </div>
 
     <!-- Fase confirmando: mapa com pin para o usuário confirmar -->
@@ -468,7 +468,7 @@ function continuar() {
             @change="refinarPorNumero"
           />
           <span v-if="carregando" class="absolute right-3 top-1/2 -translate-y-1/2 text-teal animate-spin"><AppIcon name="progress_activity" size="18" /></span>
-          <span v-else-if="numero" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500"><AppIcon name="check" size="18" /></span>
+          <span v-else-if="numero" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-700"><AppIcon name="check" size="18" /></span>
         </div>
         <p v-if="numeroAproximado && numeroProximoEncontrado" class="text-[11px] text-amber-600">
           Número exato não mapeado — usamos o prédio nº {{ numeroProximoEncontrado }}, o mais próximo cadastrado nesta rua. Arraste o pin se necessário.
@@ -476,7 +476,7 @@ function continuar() {
         <p v-else-if="numeroAproximado" class="text-[11px] text-amber-600">
           Não encontramos o número exato nesta rua — o pin ficou no centro dela. Arraste-o para o local certo.
         </p>
-        <p v-else class="text-[11px] text-gray-400">Preencha para posicionar o pin no número exato.</p>
+        <p v-else class="text-[11px] text-gray-500">Preencha para posicionar o pin no número exato.</p>
       </div>
 
       <!-- Mobile: mini mapa inline -->
@@ -485,14 +485,12 @@ function continuar() {
 
       <!-- Desktop: dica de que o pin está no mapa à esquerda -->
       <div class="hidden lg:flex items-center gap-2.5 rounded-xl bg-gray-50 border border-gray-200 p-3.5">
-        <AppIcon name="map" class="text-gray-400" />
+        <AppIcon name="map" class="text-gray-500" />
         <p class="text-xs text-gray-500 leading-relaxed">Verifique o pin no mapa à esquerda. Se necessário, arraste-o para o local exato.</p>
       </div>
 
       <AppButton :disabled="carregando" @click="continuar">Confirmar localização</AppButton>
-      <button type="button" class="text-xs text-gray-400 text-center" @click="fase = 'inicial'">
-        Corrigir endereço
-      </button>
+      <AppButton variant="secondary" @click="fase = 'inicial'">Corrigir endereço</AppButton>
     </div>
 
     <!-- Fase confirmado -->
@@ -502,9 +500,7 @@ function continuar() {
         <p class="text-xs text-teal mt-1 leading-relaxed">{{ enderecoResumo || 'Localização aproximada' }}</p>
       </div>
       <AppButton @click="continuar">Continuar</AppButton>
-      <button type="button" class="text-xs text-gray-400 text-center" @click="fase = 'cep'">
-        Corrigir endereço
-      </button>
+      <AppButton variant="secondary" @click="fase = 'cep'">Corrigir endereço</AppButton>
     </div>
   </div>
 </template>
